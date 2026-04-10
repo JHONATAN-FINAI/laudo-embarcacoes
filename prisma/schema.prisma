@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Laudo {
+  id         String   @id @default(uuid())
+  num        String   @unique
+  fabricante String
+  modelo     String
+  destino    String
+  data       String
+  cidade     String
+  specs      Json
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model BoatTemplate {
+  id         String   @id @default(uuid())
+  fabricante String
+  modelo     String
+  specs      Json
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([fabricante, modelo])
+}
+
+model AppConfig {
+  key   String @id
+  value String
+}
