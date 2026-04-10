@@ -22,6 +22,7 @@ const SPECS_FIELDS = [
 export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: any) {
   const [laudos, setLaudos] = useState(initialLaudos)
   const [boats, setBoats] = useState(initialBoats)
+  const [isImporting, setIsImporting] = useState(false)
   
   const [num, setNum] = useState(nextNum)
   const [fabricante, setFabricante] = useState('')
@@ -134,6 +135,45 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
     }
   }
 
+  const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setIsImporting(true)
+    showToast("Importando, aguarde...")
+    const reader = new FileReader()
+    reader.onload = async (ev) => {
+      try {
+        const json = JSON.parse(ev.target?.result as string)
+        if (!Array.isArray(json)) throw new Error()
+        let importedCount = 0
+        for (const item of json) {
+          if (item && item.num) {
+            await saveLaudo(item)
+            importedCount++
+          }
+        }
+        showToast(`${importedCount} laudos importados da versão antiga!`)
+        setTimeout(() => window.location.reload(), 2000)
+      } catch (err) {
+        showToast("Erro ao importar. Verifique o arquivo.")
+      } finally {
+        setIsImporting(false)
+      }
+    }
+    reader.readAsText(file)
+  }
+
+  const handleSetCounter = async () => {
+    const newVal = prompt("Digite o número do ÚLTIMO LAUDO já emitido (ex: 46):")
+    if (!newVal) return
+    const count = parseInt(newVal)
+    if (!isNaN(count)) {
+      await setLaudoCounter(count)
+      showToast(`Próximo laudo ajustado para o número ${count + 1}!`)
+      setTimeout(() => window.location.reload(), 1500)
+    }
+  }
+
   // Derived lists
   const fabricantes = Array.from(new Set(boats.map((b: any) => b.fabricante)))
   const modelosFiltrados = boats.filter((b: any) => b.fabricante === fabricante.toUpperCase()).map((b: any) => b.modelo)
@@ -156,7 +196,12 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
             <div className="app-sub">Emissão de Laudos Náuticos</div>
           </div>
         </div>
-        <div style={{display: 'flex', gap: '0.75rem'}}>
+        <div style={{display: 'flex', gap: '0.75rem', alignItems: 'center'}}>
+          <label className="btn btn-ghost btn-sm" style={{cursor: 'pointer'}} title="Importar backup (.json)">
+            ⬇ Migrar Antigos
+            <input type="file" accept=".json" style={{display: 'none'}} onChange={handleImport} disabled={isImporting} />
+          </label>
+          <button className="btn btn-ghost btn-sm" onClick={handleSetCounter}>🔢 Ajustar Contador</button>
           <button className="btn btn-secondary" onClick={() => window.print()}>🖨 Imprimir Laudo</button>
           <button className="btn btn-primary" onClick={handleSave}>💾 Salvar Laudo</button>
         </div>
