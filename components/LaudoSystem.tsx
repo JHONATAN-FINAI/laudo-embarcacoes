@@ -69,10 +69,16 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
 
     // Check local CREA images
     const savedCreaImageFrente = localStorage.getItem('sistemmar_crea_image_frente')
-    if (savedCreaImageFrente) setCreaImageFrenteBase64(savedCreaImageFrente)
+    if (savedCreaImageFrente) {
+      setCreaImageFrenteBase64(savedCreaImageFrente)
+      console.log('CREA Frente carregada do localStorage')
+    }
     
     const savedCreaImageVerso = localStorage.getItem('sistemmar_crea_image_verso')
-    if (savedCreaImageVerso) setCreaImageVersoBase64(savedCreaImageVerso)
+    if (savedCreaImageVerso) {
+      setCreaImageVersoBase64(savedCreaImageVerso)
+      console.log('CREA Verso carregada do localStorage')
+    }
   }, [])
 
   const showToast = (msg: string) => {
@@ -104,10 +110,12 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
         setCreaImageFrenteBase64(result)
         localStorage.setItem('sistemmar_crea_image_frente', result)
         showToast("Carteira CREA (Frente) atualizada!")
+        console.log('CREA Frente salva no localStorage')
       } else {
         setCreaImageVersoBase64(result)
         localStorage.setItem('sistemmar_crea_image_verso', result)
         showToast("Carteira CREA (Verso) atualizada!")
+        console.log('CREA Verso salva no localStorage')
       }
     }
     reader.readAsDataURL(file)
