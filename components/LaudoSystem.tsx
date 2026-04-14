@@ -34,7 +34,8 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
   const [specs, setSpecs] = useState<Record<string, string>>({})
   
   const [logoBase64, setLogoBase64] = useState<string | null>(null)
-  const [creaImageBase64, setCreaImageBase64] = useState<string | null>(null)
+  const [creaImageFrenteBase64, setCreaImageFrenteBase64] = useState<string | null>(null)
+  const [creaImageVersoBase64, setCreaImageVersoBase64] = useState<string | null>(null)
   
   // Dados da segunda página (CREA)
   const [nomeProfissional, setNomeProfissional] = useState('Douglas Germano da Silva')
@@ -66,9 +67,12 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
     const savedLogo = localStorage.getItem('sistemmar_logo')
     if (savedLogo) setLogoBase64(savedLogo)
 
-    // Check local CREA image
-    const savedCreaImage = localStorage.getItem('sistemmar_crea_image')
-    if (savedCreaImage) setCreaImageBase64(savedCreaImage)
+    // Check local CREA images
+    const savedCreaImageFrente = localStorage.getItem('sistemmar_crea_image_frente')
+    if (savedCreaImageFrente) setCreaImageFrenteBase64(savedCreaImageFrente)
+    
+    const savedCreaImageVerso = localStorage.getItem('sistemmar_crea_image_verso')
+    if (savedCreaImageVerso) setCreaImageVersoBase64(savedCreaImageVerso)
   }, [])
 
   const showToast = (msg: string) => {
@@ -90,15 +94,21 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
     reader.readAsDataURL(file)
   }
 
-  const handleCreaImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCreaImageUpload = (e: React.ChangeEvent<HTMLInputElement>, side: 'frente' | 'verso') => {
     const file = e.target.files?.[0]
     if (!file) return
     const reader = new FileReader()
     reader.onload = (ev) => {
       const result = ev.target?.result as string
-      setCreaImageBase64(result)
-      localStorage.setItem('sistemmar_crea_image', result)
-      showToast("Carteira CREA atualizada!")
+      if (side === 'frente') {
+        setCreaImageFrenteBase64(result)
+        localStorage.setItem('sistemmar_crea_image_frente', result)
+        showToast("Carteira CREA (Frente) atualizada!")
+      } else {
+        setCreaImageVersoBase64(result)
+        localStorage.setItem('sistemmar_crea_image_verso', result)
+        showToast("Carteira CREA (Verso) atualizada!")
+      }
     }
     reader.readAsDataURL(file)
   }
@@ -345,12 +355,20 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
             <div className="form-section">
               <div className="form-section-title">Dados Profissionais (CREA)</div>
               <div className="form-group">
-                <label>Carteira CREA</label>
+                <label>Carteira CREA - Frente</label>
                 <label className="btn btn-sm btn-ghost" style={{cursor: 'pointer', display: 'block', textAlign: 'center', width: '100%'}}>
-                  📷 Upload Carteira
-                  <input type="file" accept="image/*" style={{display: 'none'}} onChange={handleCreaImageUpload} />
+                  📷 Upload Frente
+                  <input type="file" accept="image/*" style={{display: 'none'}} onChange={(e) => handleCreaImageUpload(e, 'frente')} />
                 </label>
-                {creaImageBase64 && <div style={{fontSize: '0.75rem', marginTop: '0.5rem', color: '#666'}}>✓ Carteira carregada</div>}
+                {creaImageFrenteBase64 && <div style={{fontSize: '0.75rem', marginTop: '0.5rem', color: '#666'}}>✓ Frente carregada</div>}
+              </div>
+              <div className="form-group">
+                <label>Carteira CREA - Verso</label>
+                <label className="btn btn-sm btn-ghost" style={{cursor: 'pointer', display: 'block', textAlign: 'center', width: '100%'}}>
+                  📷 Upload Verso
+                  <input type="file" accept="image/*" style={{display: 'none'}} onChange={(e) => handleCreaImageUpload(e, 'verso')} />
+                </label>
+                {creaImageVersoBase64 && <div style={{fontSize: '0.75rem', marginTop: '0.5rem', color: '#666'}}>✓ Verso carregado</div>}
               </div>
               <div className="form-group">
                 <label>Nome Profissional</label>
@@ -482,14 +500,26 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
             <div className="doc-body">
               <div className="doc-title">Carteira de Habilitação Profissional — CREA</div>
               
-              <div style={{margin: '2rem 0', display: 'flex', justifyContent: 'center', gap: '2rem', flexWrap: 'wrap'}}>
-                {creaImageBase64 ? (
-                  <div style={{width: '100%', textAlign: 'center'}}>
-                    <img src={creaImageBase64} alt="Carteira CREA" style={{maxWidth: '600px', height: 'auto', width: '100%'}} />
+              <div style={{margin: '2rem 0', display: 'flex', justifyContent: 'center', gap: '1.5rem', flexWrap: 'wrap'}}>
+                {creaImageFrenteBase64 ? (
+                  <div style={{flex: '1', minWidth: '280px', textAlign: 'center'}}>
+                    <img src={creaImageFrenteBase64} alt="Carteira CREA Frente" style={{maxWidth: '100%', height: 'auto'}} />
+                    <div style={{fontSize: '0.8rem', marginTop: '0.5rem', color: '#666'}}>Frente</div>
                   </div>
                 ) : (
-                  <div style={{width: '100%', textAlign: 'center', padding: '4rem 1rem', border: '2px dashed #ccc', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '400px'}}>
-                    <span style={{color: '#999', fontSize: '1.1rem'}}>Imagem da Carteira CREA</span>
+                  <div style={{flex: '1', minWidth: '280px', textAlign: 'center', padding: '3rem 1rem', border: '2px dashed #ccc', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '350px'}}>
+                    <span style={{color: '#999'}}>Frente</span>
+                  </div>
+                )}
+                
+                {creaImageVersoBase64 ? (
+                  <div style={{flex: '1', minWidth: '280px', textAlign: 'center'}}>
+                    <img src={creaImageVersoBase64} alt="Carteira CREA Verso" style={{maxWidth: '100%', height: 'auto'}} />
+                    <div style={{fontSize: '0.8rem', marginTop: '0.5rem', color: '#666'}}>Verso</div>
+                  </div>
+                ) : (
+                  <div style={{flex: '1', minWidth: '280px', textAlign: 'center', padding: '3rem 1rem', border: '2px dashed #ccc', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '350px'}}>
+                    <span style={{color: '#999'}}>Verso</span>
                   </div>
                 )}
               </div>
