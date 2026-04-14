@@ -237,13 +237,6 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
   return (
     <>
       <header className="app-header">
-        <div className="app-header-left">
-          <div className="app-title-group">
-            <div className="app-title">ENGTEC SOLUTIONS</div>
-            <div className="app-sub">Emissão de Laudos Náuticos</div>
-          </div>
-        </div>
-
         <div className="app-header-right">
           <label className="btn btn-ghost btn-sm" style={{cursor: 'pointer'}} title="Importar backup (.json)">
             ⬇ Migrar Antigos
