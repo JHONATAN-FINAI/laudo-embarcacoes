@@ -364,11 +364,8 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
           <div className="page">
             <div className="doc-header">
               <div className="doc-header-info">
+                <div className="doc-num-badge">Laudo Nº <span>{num}</span></div>
               </div>
-            </div>
-
-            <div className="doc-num-section">
-              <div className="doc-num-badge">Laudo Nº <span>{num}</span></div>
             </div>
 
             <div className="doc-body">
@@ -424,11 +421,8 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
           <div className="page">
             <div className="doc-header">
               <div className="doc-header-info">
+                <div className="doc-num-badge">Laudo Nº <span>{num}</span></div>
               </div>
-            </div>
-
-            <div className="doc-num-section">
-              <div className="doc-num-badge">Laudo Nº <span>{num}</span></div>
             </div>
 
             <div className="doc-body">

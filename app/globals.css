@@ -504,13 +504,12 @@ input[readonly] {
 /* Doc Layout */
 .doc-header {
   display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-  margin: 0 -20mm 16mm -20mm;
-  padding: 12mm 20mm 6mm 20mm;
+  justify-content: space-between;
+  align-items: center;
+  margin: -18mm -20mm 14mm -20mm;
+  padding: 8mm 20mm 8mm 20mm;
   border-bottom: 3px solid var(--navy-dark);
   position: relative;
-  min-height: 56px;
 }
 
 .doc-header::after {
@@ -561,21 +560,15 @@ input[readonly] {
 }
 
 .doc-num-badge {
-  margin-top: 10px;
+  margin-top: 5px;
   display: inline-block;
   background: var(--navy-dark);
   color: var(--gold-light);
-  font-size: 10pt;
+  font-size: 8pt;
   font-weight: 700;
-  padding: 6px 14px;
+  padding: 3px 10px;
   border-radius: 4px;
   letter-spacing: 0.05em;
-}
-
-/* Doc Num Section */
-.doc-num-section {
-  text-align: right;
-  margin: 8px 20mm 12px 20mm;
 }
 
 /* Doc Body */
@@ -789,6 +782,10 @@ input[readonly] {
   .doc-header {
     margin: 0 0 16mm 0;
     padding: 12mm 0 6mm 0;
+  }
+
+  .doc-num-section {
+    margin: 8px 0 12px 0;
   }
 
   .doc-num-section {
