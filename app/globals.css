@@ -491,7 +491,7 @@ input[readonly] {
   min-height: 297mm;
   background: var(--white);
   box-shadow: var(--shadow-lg);
-  padding: 18mm 20mm 22mm;
+  padding: 22mm 20mm 22mm;
   position: relative;
   color: #0F172A;
   font-family: 'Inter', sans-serif;
@@ -504,12 +504,13 @@ input[readonly] {
 /* Doc Layout */
 .doc-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: -18mm -20mm 14mm -20mm;
-  padding: 8mm 20mm 8mm 20mm;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin: 0 -20mm 16mm -20mm;
+  padding: 12mm 20mm 6mm 20mm;
   border-bottom: 3px solid var(--navy-dark);
   position: relative;
+  min-height: 56px;
 }
 
 .doc-header::after {
@@ -560,15 +561,21 @@ input[readonly] {
 }
 
 .doc-num-badge {
-  margin-top: 5px;
+  margin-top: 10px;
   display: inline-block;
   background: var(--navy-dark);
   color: var(--gold-light);
-  font-size: 8pt;
+  font-size: 10pt;
   font-weight: 700;
-  padding: 3px 10px;
+  padding: 6px 14px;
   border-radius: 4px;
   letter-spacing: 0.05em;
+}
+
+/* Doc Num Section */
+.doc-num-section {
+  text-align: right;
+  margin: 8px 20mm 12px 20mm;
 }
 
 /* Doc Body */
@@ -745,7 +752,7 @@ input[readonly] {
 @media print {
   @page { 
     size: A4; 
-    margin: 15mm 20mm 15mm 20mm; 
+    margin: 20mm 20mm 15mm 20mm; 
   }
 
   body, html { 
@@ -774,16 +781,31 @@ input[readonly] {
     padding: 0;
   }
 
+  .doc-header {
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .doc-header {
+    margin: 0 0 16mm 0;
+    padding: 12mm 0 6mm 0;
+  }
+
+  .doc-num-section {
+    margin: 8px 0 12px 0;
+  }
+
   .page {
-    width: 210mm;
-    height: 297mm;
+    width: auto;
+    min-height: auto;
     box-shadow: none;
     border-radius: 0;
     page-break-after: always;
     break-after: page;
-    overflow: hidden;
+    overflow: visible;
     margin: 0;
-    padding: 0;
+    padding: 32mm 16mm 16mm;
+    box-sizing: border-box;
   }
 
   .page:last-child { 

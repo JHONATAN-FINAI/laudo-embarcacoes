@@ -363,13 +363,12 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
         <div className="preview-area">
           <div className="page">
             <div className="doc-header">
-              <div className="doc-logo-area">
-                <div className="doc-logo-placeholder"></div>
-              </div>
               <div className="doc-header-info">
-                <div className="company-name"></div>
-                <div className="doc-num-badge">Laudo Nº <span>{num}</span></div>
               </div>
+            </div>
+
+            <div className="doc-num-section">
+              <div className="doc-num-badge">Laudo Nº <span>{num}</span></div>
             </div>
 
             <div className="doc-body">
@@ -416,7 +415,6 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
 
             <div className="doc-footer">
               <div className="footer-left">
-                ENGTEC SOLUTIONS<br/>
                 Rondonópolis – MT
               </div>
               <div className="footer-page">1</div>
@@ -425,13 +423,12 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
 
           <div className="page">
             <div className="doc-header">
-              <div className="doc-logo-area">
-                <div className="doc-logo-placeholder"></div>
-              </div>
               <div className="doc-header-info">
-                <div className="company-name"></div>
-                <div className="doc-num-badge">Laudo Nº <span>{num}</span></div>
               </div>
+            </div>
+
+            <div className="doc-num-section">
+              <div className="doc-num-badge">Laudo Nº <span>{num}</span></div>
             </div>
 
             <div className="doc-body">
@@ -464,7 +461,6 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
 
             <div className="doc-footer">
               <div className="footer-left">
-                ENGTEC SOLUTIONS<br/>
                 Rondonópolis – MT
               </div>
               <div className="footer-page">2</div>
