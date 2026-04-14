@@ -422,7 +422,7 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
                 {logoBase64 ? (
                   <img src={logoBase64} alt="Logo Documento" />
                 ) : (
-                  <div className="doc-logo-placeholder">SISTEMMAR</div>
+                  <div className="doc-logo-placeholder"></div>
                 )}
               </div>
               <div className="doc-header-info">

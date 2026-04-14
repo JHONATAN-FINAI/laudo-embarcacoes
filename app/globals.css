@@ -700,9 +700,16 @@ input[readonly] {
 
 /* Print Rules */
 @media print {
-  @page { size: A4; margin: 0; }
+  @page { 
+    size: A4; 
+    margin: 15mm 20mm 15mm 20mm; 
+  }
 
-  body, html { background: white !important; }
+  body, html { 
+    background: white !important; 
+    margin: 0;
+    padding: 0;
+  }
 
   .app-header,
   .sidebar,
@@ -720,6 +727,8 @@ input[readonly] {
     display: block;
     gap: 0;
     align-items: unset;
+    margin: 0;
+    padding: 0;
   }
 
   .page {
@@ -730,9 +739,19 @@ input[readonly] {
     page-break-after: always;
     break-after: page;
     overflow: hidden;
+    margin: 0;
+    padding: 0;
   }
 
-  .page:last-child { page-break-after: avoid; break-after: avoid; }
+  .page:last-child { 
+    page-break-after: avoid; 
+    break-after: avoid; 
+  }
 
-  .doc-footer { position: absolute; }
+  .doc-footer { 
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
 }
