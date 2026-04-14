@@ -470,7 +470,7 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
                 {logoBase64 ? (
                   <img src={logoBase64} alt="Logo Documento" />
                 ) : (
-                  <div className="doc-logo-placeholder">SISTEMMAR</div>
+                  <div className="doc-logo-placeholder"></div>
                 )}
               </div>
               <div className="doc-header-info">
@@ -484,58 +484,14 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
               
               <div style={{margin: '2rem 0', display: 'flex', justifyContent: 'center', gap: '2rem', flexWrap: 'wrap'}}>
                 {creaImageBase64 ? (
-                  <div style={{flex: '1', minWidth: '300px', textAlign: 'center'}}>
-                    <img src={creaImageBase64} alt="Carteira CREA Frente" style={{maxWidth: '100%', height: 'auto', border: '1px solid #ccc'}} />
-                    <div style={{fontSize: '0.875rem', marginTop: '0.5rem', color: '#666'}}>Frente da Carteira</div>
+                  <div style={{width: '100%', textAlign: 'center'}}>
+                    <img src={creaImageBase64} alt="Carteira CREA" style={{maxWidth: '600px', height: 'auto', width: '100%'}} />
                   </div>
                 ) : (
-                  <div style={{flex: '1', minWidth: '300px', textAlign: 'center', padding: '3rem 1rem', border: '2px dashed #ccc', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <span style={{color: '#999'}}>Imagem da Carteira CREA</span>
+                  <div style={{width: '100%', textAlign: 'center', padding: '4rem 1rem', border: '2px dashed #ccc', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '400px'}}>
+                    <span style={{color: '#999', fontSize: '1.1rem'}}>Imagem da Carteira CREA</span>
                   </div>
                 )}
-              </div>
-
-              <div className="specs-block">
-                <div className="spec-item">
-                  <div className="spec-label">Nome:</div>
-                  <div className="spec-value">{nomeProfissional}</div>
-                </div>
-                <div className="spec-item">
-                  <div className="spec-label">Registro CREA-MT:</div>
-                  <div className="spec-value">{registroCrea}</div>
-                </div>
-                <div className="spec-item">
-                  <div className="spec-label">Título Profissional:</div>
-                  <div className="spec-value">{tituloProfissional}</div>
-                </div>
-                <div className="spec-item">
-                  <div className="spec-label">CPF:</div>
-                  <div className="spec-value">{cpfProfissional}</div>
-                </div>
-                <div className="spec-item">
-                  <div className="spec-label">Data de Nascimento:</div>
-                  <div className="spec-value">{dataNascimento}</div>
-                </div>
-                <div className="spec-item">
-                  <div className="spec-label">Naturalidade:</div>
-                  <div className="spec-value">{naturalidade}</div>
-                </div>
-                <div className="spec-item">
-                  <div className="spec-label">Tipo Sanguíneo:</div>
-                  <div className="spec-value">{tipoSanguineo}</div>
-                </div>
-                <div className="spec-item">
-                  <div className="spec-label">Data de Expedição:</div>
-                  <div className="spec-value">{dataExpedicao}</div>
-                </div>
-                <div className="spec-item">
-                  <div className="spec-label">PIS:</div>
-                  <div className="spec-value">{pis}</div>
-                </div>
-                <div className="spec-item">
-                  <div className="spec-label">Filiação:</div>
-                  <div className="spec-value">{filiacao}</div>
-                </div>
               </div>
             </div>
 
