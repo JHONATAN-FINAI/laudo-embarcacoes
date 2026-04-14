@@ -246,11 +246,7 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
         
         <div className="app-header-center">
           <label className="app-logo-wrap" title="Clique para carregar a logo da empresa" style={{width: '150px', height: '50px'}}>
-            {logoBase64 ? (
-              <img src={logoBase64} alt="Logo da Empresa" />
-            ) : (
-              <span className="app-logo-placeholder" style={{fontSize: '1.5rem'}}>🏢</span>
-            )}
+            <img src={logoBase64 || '/engtec-logo.svg'} alt="Logo da Empresa" />
             <span className="logo-upload-hint">ALTERAR LOGO</span>
             <input type="file" accept="image/*" style={{display: 'none'}} onChange={handleLogoUpload} />
           </label>
@@ -383,11 +379,7 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
           <div className="page">
             <div className="doc-header">
               <div className="doc-logo-area">
-                {logoBase64 ? (
-                  <img src={logoBase64} alt="Logo Documento" />
-                ) : (
-                  <div className="doc-logo-placeholder">ENGTEC SOLUTIONS</div>
-                )}
+                <img src={logoBase64 || '/engtec-logo.svg'} alt="Logo Documento" />
               </div>
               <div className="doc-header-info">
                 <div className="company-name">ENGTEC SOLUTIONS</div>
@@ -449,11 +441,7 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
           <div className="page">
             <div className="doc-header">
               <div className="doc-logo-area">
-                {logoBase64 ? (
-                  <img src={logoBase64} alt="Logo Documento" />
-                ) : (
-                  <div className="doc-logo-placeholder">ENGTEC SOLUTIONS</div>
-                )}
+                <img src={logoBase64 || '/engtec-logo.svg'} alt="Logo Documento" />
               </div>
               <div className="doc-header-info">
                 <div className="company-name">ENGTEC SOLUTIONS</div>

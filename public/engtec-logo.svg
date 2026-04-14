@@ -1,0 +1,9 @@
+<svg width="360" height="120" viewBox="0 0 360 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="360" height="120" rx="20" fill="#0B1630"/>
+  <circle cx="60" cy="60" r="34" fill="#FFFFFF"/>
+  <path d="M42 46 L54 46 C61 46 66 52 66 59 C66 66 61 72 54 72 L42 72 L42 46 Z" fill="#0B1630"/>
+  <path d="M46 54 L54 54 L54 66 L46 66 L46 54 Z" fill="#0B1630"/>
+  <path d="M76 46 H94 L104 74 H88 L86 66 H78 L76 74 H60 L70 46 H76 Z" fill="#FFFFFF"/>
+  <text x="125" y="55" fill="#FFFFFF" font-family="Roboto, sans-serif" font-size="22" font-weight="700">ENGTEC</text>
+  <text x="125" y="86" fill="#FFFFFF" font-family="Roboto, sans-serif" font-size="16" font-weight="400">SOLUTIONS</text>
+</svg>
