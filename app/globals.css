@@ -70,22 +70,40 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   align-items: center;
   gap: 1rem;
-}
-
-.app-header-center {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex: 1;
+  min-width: 0;
 }
 
 .app-header-right {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  flex-shrink: 0;
 }
+
+.app-title-group {
+  min-width: 0;
+}
+
+.app-title {
+  font-weight: 600;
+  font-size: 1.125rem;
+  letter-spacing: 0.05em;
+  color: var(--white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app-sub {
+  font-size: 0.75rem;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: 'Outfit', sans-serif;
+  white-space: nowrap;
+}
+
 
 .app-brand {
   display: flex;
@@ -645,30 +663,34 @@ input[readonly] {
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 0 20mm 10mm;
+  padding: 0 12mm 6mm;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
   font-family: 'Inter', sans-serif;
   font-size: 8pt;
   color: var(--text-muted);
   border-top: 1px solid var(--border);
 }
 
-.footer-left { line-height: 1.4; }
+.footer-left {
+  line-height: 1.2;
+  font-size: 7.5pt;
+}
 
 .footer-page {
   font-weight: 600;
-  font-size: 9pt;
+  font-size: 8.5pt;
   color: var(--navy-dark);
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   border: 1px solid var(--navy-dark);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 
 /* Page 2 CREA */
 .crea-container {
