@@ -464,25 +464,25 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
             <div className="doc-body">
               <div className="doc-title">Carteira de Habilitação Profissional — CREA</div>
               
-              <div style={{margin: '2rem 0', display: 'flex', justifyContent: 'center', gap: '1.5rem', flexWrap: 'wrap'}}>
+              <div style={{margin: '2rem 0', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: '2rem'}}>
                 {creaImageFrenteBase64 ? (
-                  <div style={{flex: '1', minWidth: '280px', textAlign: 'center'}}>
+                  <div style={{width: '100%', maxWidth: '500px', textAlign: 'center'}}>
                     <img src={creaImageFrenteBase64} alt="Carteira CREA Frente" style={{maxWidth: '100%', height: 'auto'}} />
                     <div style={{fontSize: '0.8rem', marginTop: '0.5rem', color: '#666'}}>Frente</div>
                   </div>
                 ) : (
-                  <div style={{flex: '1', minWidth: '280px', textAlign: 'center', padding: '3rem 1rem', border: '2px dashed #ccc', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '350px'}}>
+                  <div style={{width: '100%', maxWidth: '500px', textAlign: 'center', padding: '3rem 1rem', border: '2px dashed #ccc', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '350px'}}>
                     <span style={{color: '#999'}}>Frente</span>
                   </div>
                 )}
                 
                 {creaImageVersoBase64 ? (
-                  <div style={{flex: '1', minWidth: '280px', textAlign: 'center'}}>
+                  <div style={{width: '100%', maxWidth: '500px', textAlign: 'center'}}>
                     <img src={creaImageVersoBase64} alt="Carteira CREA Verso" style={{maxWidth: '100%', height: 'auto'}} />
                     <div style={{fontSize: '0.8rem', marginTop: '0.5rem', color: '#666'}}>Verso</div>
                   </div>
                 ) : (
-                  <div style={{flex: '1', minWidth: '280px', textAlign: 'center', padding: '3rem 1rem', border: '2px dashed #ccc', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '350px'}}>
+                  <div style={{width: '100%', maxWidth: '500px', textAlign: 'center', padding: '3rem 1rem', border: '2px dashed #ccc', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '350px'}}>
                     <span style={{color: '#999'}}>Verso</span>
                   </div>
                 )}
