@@ -364,10 +364,10 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
           <div className="page">
             <div className="doc-header">
               <div className="doc-logo-area">
-                <div className="doc-logo-placeholder">ENGTEC SOLUTIONS</div>
+                <div className="doc-logo-placeholder"></div>
               </div>
               <div className="doc-header-info">
-                <div className="company-name">ENGTEC SOLUTIONS</div>
+                <div className="company-name"></div>
                 <div className="doc-num-badge">Laudo Nº <span>{num}</span></div>
               </div>
             </div>
@@ -426,10 +426,10 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
           <div className="page">
             <div className="doc-header">
               <div className="doc-logo-area">
-                <div className="doc-logo-placeholder">ENGTEC SOLUTIONS</div>
+                <div className="doc-logo-placeholder"></div>
               </div>
               <div className="doc-header-info">
-                <div className="company-name">ENGTEC SOLUTIONS</div>
+                <div className="company-name"></div>
                 <div className="doc-num-badge">Laudo Nº <span>{num}</span></div>
               </div>
             </div>
