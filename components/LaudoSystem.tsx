@@ -34,6 +34,20 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
   const [specs, setSpecs] = useState<Record<string, string>>({})
   
   const [logoBase64, setLogoBase64] = useState<string | null>(null)
+  const [creaImageBase64, setCreaImageBase64] = useState<string | null>(null)
+  
+  // Dados da segunda página (CREA)
+  const [nomeProfissional, setNomeProfissional] = useState('Douglas Germano da Silva')
+  const [registroCrea, setRegistroCrea] = useState('MT05440')
+  const [tituloProfissional, setTituloProfissional] = useState('ENGENHEIRO MECÂNICO')
+  const [cpfProfissional, setCpfProfissional] = useState('063.587.631-05')
+  const [dataNascimento, setDataNascimento] = useState('22/05/1995')
+  const [naturalidade, setNaturalidade] = useState('FOZ DO IGUAÇU PR')
+  const [tipoSanguineo, setTipoSanguineo] = useState('O +')
+  const [dataExpedicao, setDataExpedicao] = useState('23/12/2020')
+  const [pis, setPis] = useState('27682919 559/MT')
+  const [filiacao, setFiliacao] = useState('JOÃO GERMANO DA SILVA')
+  
   const [toast, setToast] = useState<{msg: string, visible: boolean}>({ msg: '', visible: false })
   const toastTimeout = useRef<NodeJS.Timeout | null>(null)
 
@@ -51,6 +65,10 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
     // Check local logo
     const savedLogo = localStorage.getItem('sistemmar_logo')
     if (savedLogo) setLogoBase64(savedLogo)
+
+    // Check local CREA image
+    const savedCreaImage = localStorage.getItem('sistemmar_crea_image')
+    if (savedCreaImage) setCreaImageBase64(savedCreaImage)
   }, [])
 
   const showToast = (msg: string) => {
@@ -72,9 +90,25 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
     reader.readAsDataURL(file)
   }
 
+  const handleCreaImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = (ev) => {
+      const result = ev.target?.result as string
+      setCreaImageBase64(result)
+      localStorage.setItem('sistemmar_crea_image', result)
+      showToast("Carteira CREA atualizada!")
+    }
+    reader.readAsDataURL(file)
+  }
+
   const handleSave = async () => {
     const payload = {
-      num, fabricante, modelo, destino, data, cidade, specs: { ...specs, serie }
+      num, fabricante, modelo, destino, data, cidade, specs: { ...specs, serie },
+      // Dados profissionais (CREA)
+      nomeProfissional, registroCrea, tituloProfissional, cpfProfissional, 
+      dataNascimento, naturalidade, tipoSanguineo, dataExpedicao, pis, filiacao
     }
     
     // Save to DB via Server Action
@@ -111,6 +145,18 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
     setSerie(loadedSpecs.serie || 'XXXX')
     delete loadedSpecs.serie
     setSpecs(loadedSpecs)
+
+    // Load professional data
+    setNomeProfissional(laudo.nomeProfissional || 'Douglas Germano da Silva')
+    setRegistroCrea(laudo.registroCrea || 'MT05440')
+    setTituloProfissional(laudo.tituloProfissional || 'ENGENHEIRO MECÂNICO')
+    setCpfProfissional(laudo.cpfProfissional || '063.587.631-05')
+    setDataNascimento(laudo.dataNascimento || '22/05/1995')
+    setNaturalidade(laudo.naturalidade || 'FOZ DO IGUAÇU PR')
+    setTipoSanguineo(laudo.tipoSanguineo || 'O +')
+    setDataExpedicao(laudo.dataExpedicao || '23/12/2020')
+    setPis(laudo.pis || '27682919 559/MT')
+    setFiliacao(laudo.filiacao || 'JOÃO GERMANO DA SILVA')
 
     showToast("Laudo carregado para edição!")
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -296,6 +342,58 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
               </div>
             </div>
 
+            <div className="form-section">
+              <div className="form-section-title">Dados Profissionais (CREA)</div>
+              <div className="form-group">
+                <label>Carteira CREA</label>
+                <label className="btn btn-sm btn-ghost" style={{cursor: 'pointer', display: 'block', textAlign: 'center', width: '100%'}}>
+                  📷 Upload Carteira
+                  <input type="file" accept="image/*" style={{display: 'none'}} onChange={handleCreaImageUpload} />
+                </label>
+                {creaImageBase64 && <div style={{fontSize: '0.75rem', marginTop: '0.5rem', color: '#666'}}>✓ Carteira carregada</div>}
+              </div>
+              <div className="form-group">
+                <label>Nome Profissional</label>
+                <input type="text" value={nomeProfissional} onChange={e => setNomeProfissional(e.target.value)} />
+              </div>
+              <div className="form-group">
+                <label>Registro CREA</label>
+                <input type="text" value={registroCrea} onChange={e => setRegistroCrea(e.target.value)} />
+              </div>
+              <div className="form-group">
+                <label>Título Profissional</label>
+                <input type="text" value={tituloProfissional} onChange={e => setTituloProfissional(e.target.value)} />
+              </div>
+              <div className="form-group">
+                <label>CPF</label>
+                <input type="text" value={cpfProfissional} onChange={e => setCpfProfissional(e.target.value)} />
+              </div>
+              <div className="form-group">
+                <label>Data de Nascimento</label>
+                <input type="text" value={dataNascimento} onChange={e => setDataNascimento(e.target.value)} />
+              </div>
+              <div className="form-group">
+                <label>Naturalidade</label>
+                <input type="text" value={naturalidade} onChange={e => setNaturalidade(e.target.value)} />
+              </div>
+              <div className="form-group">
+                <label>Tipo Sanguíneo</label>
+                <input type="text" value={tipoSanguineo} onChange={e => setTipoSanguineo(e.target.value)} />
+              </div>
+              <div className="form-group">
+                <label>Data de Expedição</label>
+                <input type="text" value={dataExpedicao} onChange={e => setDataExpedicao(e.target.value)} />
+              </div>
+              <div className="form-group">
+                <label>PIS</label>
+                <input type="text" value={pis} onChange={e => setPis(e.target.value)} />
+              </div>
+              <div className="form-group">
+                <label>Filiação</label>
+                <input type="text" value={filiacao} onChange={e => setFiliacao(e.target.value)} />
+              </div>
+            </div>
+
           </div>
         </aside>
 
@@ -365,8 +463,90 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
               <div className="footer-page">1</div>
             </div>
           </div>
-          
-          {/* Page 2 - Hidden on web view or display it? We will display it side by side or below */}
+
+          <div className="page">
+            <div className="doc-header">
+              <div className="doc-logo-area">
+                {logoBase64 ? (
+                  <img src={logoBase64} alt="Logo Documento" />
+                ) : (
+                  <div className="doc-logo-placeholder">SISTEMMAR</div>
+                )}
+              </div>
+              <div className="doc-header-info">
+                <div className="company-name">ENGTEC SOLUTIONS</div>
+                <div className="doc-num-badge">Laudo Nº <span>{num}</span></div>
+              </div>
+            </div>
+
+            <div className="doc-body">
+              <div className="doc-title">Carteira de Habilitação Profissional — CREA</div>
+              
+              <div style={{margin: '2rem 0', display: 'flex', justifyContent: 'center', gap: '2rem', flexWrap: 'wrap'}}>
+                {creaImageBase64 ? (
+                  <div style={{flex: '1', minWidth: '300px', textAlign: 'center'}}>
+                    <img src={creaImageBase64} alt="Carteira CREA Frente" style={{maxWidth: '100%', height: 'auto', border: '1px solid #ccc'}} />
+                    <div style={{fontSize: '0.875rem', marginTop: '0.5rem', color: '#666'}}>Frente da Carteira</div>
+                  </div>
+                ) : (
+                  <div style={{flex: '1', minWidth: '300px', textAlign: 'center', padding: '3rem 1rem', border: '2px dashed #ccc', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                    <span style={{color: '#999'}}>Imagem da Carteira CREA</span>
+                  </div>
+                )}
+              </div>
+
+              <div className="specs-block">
+                <div className="spec-item">
+                  <div className="spec-label">Nome:</div>
+                  <div className="spec-value">{nomeProfissional}</div>
+                </div>
+                <div className="spec-item">
+                  <div className="spec-label">Registro CREA-MT:</div>
+                  <div className="spec-value">{registroCrea}</div>
+                </div>
+                <div className="spec-item">
+                  <div className="spec-label">Título Profissional:</div>
+                  <div className="spec-value">{tituloProfissional}</div>
+                </div>
+                <div className="spec-item">
+                  <div className="spec-label">CPF:</div>
+                  <div className="spec-value">{cpfProfissional}</div>
+                </div>
+                <div className="spec-item">
+                  <div className="spec-label">Data de Nascimento:</div>
+                  <div className="spec-value">{dataNascimento}</div>
+                </div>
+                <div className="spec-item">
+                  <div className="spec-label">Naturalidade:</div>
+                  <div className="spec-value">{naturalidade}</div>
+                </div>
+                <div className="spec-item">
+                  <div className="spec-label">Tipo Sanguíneo:</div>
+                  <div className="spec-value">{tipoSanguineo}</div>
+                </div>
+                <div className="spec-item">
+                  <div className="spec-label">Data de Expedição:</div>
+                  <div className="spec-value">{dataExpedicao}</div>
+                </div>
+                <div className="spec-item">
+                  <div className="spec-label">PIS:</div>
+                  <div className="spec-value">{pis}</div>
+                </div>
+                <div className="spec-item">
+                  <div className="spec-label">Filiação:</div>
+                  <div className="spec-value">{filiacao}</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="doc-footer">
+              <div className="footer-left">
+                ENGTEC SOLUTIONS<br/>
+                Rondonópolis – MT
+              </div>
+              <div className="footer-page">2</div>
+            </div>
+          </div>
         </div>
 
         <div className="history-section">
