@@ -245,11 +245,10 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
         </div>
         
         <div className="app-header-center">
-          <label className="app-logo-wrap" title="Clique para carregar a logo da empresa" style={{width: '150px', height: '50px'}}>
-            <img src={logoBase64 || '/engtec-logo.svg'} alt="Logo da Empresa" />
-            <span className="logo-upload-hint">ALTERAR LOGO</span>
-            <input type="file" accept="image/*" style={{display: 'none'}} onChange={handleLogoUpload} />
-          </label>
+          <div style={{textAlign: 'center'}}>
+            <div className="app-title">ENGTEC SOLUTIONS</div>
+            <div className="app-sub">Emissão de Laudos Náuticos</div>
+          </div>
         </div>
         
         <div className="app-header-right">
@@ -379,7 +378,7 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
           <div className="page">
             <div className="doc-header">
               <div className="doc-logo-area">
-                <img src={logoBase64 || '/engtec-logo.svg'} alt="Logo Documento" />
+                <div className="doc-logo-placeholder">ENGTEC SOLUTIONS</div>
               </div>
               <div className="doc-header-info">
                 <div className="company-name">ENGTEC SOLUTIONS</div>
@@ -441,7 +440,7 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
           <div className="page">
             <div className="doc-header">
               <div className="doc-logo-area">
-                <img src={logoBase64 || '/engtec-logo.svg'} alt="Logo Documento" />
+                <div className="doc-logo-placeholder">ENGTEC SOLUTIONS</div>
               </div>
               <div className="doc-header-info">
                 <div className="company-name">ENGTEC SOLUTIONS</div>
