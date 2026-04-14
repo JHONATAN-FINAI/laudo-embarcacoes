@@ -237,22 +237,26 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
   return (
     <>
       <header className="app-header">
-        <div className="app-brand">
-          <label className="app-logo-wrap" title="Clique para carregar a logo">
-            {logoBase64 ? (
-              <img src={logoBase64} alt="Logo" />
-            ) : (
-              <span className="app-logo-placeholder">⚓</span>
-            )}
-            <span className="logo-upload-hint">ALTERAR LOGO</span>
-            <input type="file" accept="image/*" style={{display: 'none'}} onChange={handleLogoUpload} />
-          </label>
+        <div className="app-header-left">
           <div className="app-title-group">
             <div className="app-title">ENGTEC SOLUTIONS</div>
             <div className="app-sub">Emissão de Laudos Náuticos</div>
           </div>
         </div>
-        <div style={{display: 'flex', gap: '0.75rem', alignItems: 'center'}}>
+        
+        <div className="app-header-center">
+          <label className="app-logo-wrap" title="Clique para carregar a logo da empresa" style={{width: '150px', height: '50px'}}>
+            {logoBase64 ? (
+              <img src={logoBase64} alt="Logo da Empresa" />
+            ) : (
+              <span className="app-logo-placeholder" style={{fontSize: '1.5rem'}}>🏢</span>
+            )}
+            <span className="logo-upload-hint">ALTERAR LOGO</span>
+            <input type="file" accept="image/*" style={{display: 'none'}} onChange={handleLogoUpload} />
+          </label>
+        </div>
+        
+        <div className="app-header-right">
           <label className="btn btn-ghost btn-sm" style={{cursor: 'pointer'}} title="Importar backup (.json)">
             ⬇ Migrar Antigos
             <input type="file" accept=".json" style={{display: 'none'}} onChange={handleImport} disabled={isImporting} />
@@ -369,46 +373,6 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
                   <input type="file" accept="image/*" style={{display: 'none'}} onChange={(e) => handleCreaImageUpload(e, 'verso')} />
                 </label>
                 {creaImageVersoBase64 && <div style={{fontSize: '0.75rem', marginTop: '0.5rem', color: '#666'}}>✓ Verso carregado</div>}
-              </div>
-              <div className="form-group">
-                <label>Nome Profissional</label>
-                <input type="text" value={nomeProfissional} onChange={e => setNomeProfissional(e.target.value)} />
-              </div>
-              <div className="form-group">
-                <label>Registro CREA</label>
-                <input type="text" value={registroCrea} onChange={e => setRegistroCrea(e.target.value)} />
-              </div>
-              <div className="form-group">
-                <label>Título Profissional</label>
-                <input type="text" value={tituloProfissional} onChange={e => setTituloProfissional(e.target.value)} />
-              </div>
-              <div className="form-group">
-                <label>CPF</label>
-                <input type="text" value={cpfProfissional} onChange={e => setCpfProfissional(e.target.value)} />
-              </div>
-              <div className="form-group">
-                <label>Data de Nascimento</label>
-                <input type="text" value={dataNascimento} onChange={e => setDataNascimento(e.target.value)} />
-              </div>
-              <div className="form-group">
-                <label>Naturalidade</label>
-                <input type="text" value={naturalidade} onChange={e => setNaturalidade(e.target.value)} />
-              </div>
-              <div className="form-group">
-                <label>Tipo Sanguíneo</label>
-                <input type="text" value={tipoSanguineo} onChange={e => setTipoSanguineo(e.target.value)} />
-              </div>
-              <div className="form-group">
-                <label>Data de Expedição</label>
-                <input type="text" value={dataExpedicao} onChange={e => setDataExpedicao(e.target.value)} />
-              </div>
-              <div className="form-group">
-                <label>PIS</label>
-                <input type="text" value={pis} onChange={e => setPis(e.target.value)} />
-              </div>
-              <div className="form-group">
-                <label>Filiação</label>
-                <input type="text" value={filiacao} onChange={e => setFiliacao(e.target.value)} />
               </div>
             </div>
 
