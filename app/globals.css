@@ -800,11 +800,20 @@ input[readonly] {
     width: 210mm !important;
     height: 297mm !important;
     min-height: 297mm !important;
-    box-shadow: none;
-    border-radius: 0;
+    box-sizing: border-box !important;
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
     page-break-after: always;
     break-after: page;
     margin: 0 !important;
+  }
+
+  .page:last-child {
+    page-break-after: avoid;
+    break-after: avoid;
   }
 
   .doc-body {
