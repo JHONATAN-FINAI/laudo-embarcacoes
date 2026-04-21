@@ -373,7 +373,6 @@ input[readonly] {
 
 /* History Table */
 .history-section {
-  grid-column: 1 / -1;
   background: var(--white);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
