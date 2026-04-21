@@ -511,7 +511,7 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum, init
                 Declaro, ainda, que a embarcação foi construída em conformidade com as normas e regulamentos nacionais em vigor.
               </div>
 
-              <div className="doc-city-date">{cidade}, {data}</div>
+
 
               <div className="signature-area">
                 <div className="sig-line">
