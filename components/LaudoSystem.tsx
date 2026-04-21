@@ -57,6 +57,8 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum, init
   const [newEngNome, setNewEngNome] = useState('')
   const [newEngCrea, setNewEngCrea] = useState('')
 
+  const [showBoatsReport, setShowBoatsReport] = useState(false)
+
   const [toast, setToast] = useState<{ msg: string, visible: boolean }>({ msg: '', visible: false })
   const toastTimeout = useRef<NodeJS.Timeout | null>(null)
 
@@ -290,6 +292,7 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum, init
     <>
       <header className="app-header">
         <div className="app-header-right">
+          <button className="btn btn-ghost btn-sm" onClick={() => setShowBoatsReport(true)}>📋 Relatório de Fabricantes</button>
           <label className="btn btn-ghost btn-sm" style={{ cursor: 'pointer' }} title="Importar backup (.json)">
             ⬇ Migrar Antigos
             <input type="file" accept=".json" style={{ display: 'none' }} onChange={handleImport} disabled={isImporting} />
@@ -605,6 +608,54 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum, init
       {toast.visible && (
         <div id="toast">
           {toast.msg}
+        </div>
+      )}
+
+      {showBoatsReport && (
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ background: '#fff', padding: '2rem', borderRadius: '8px', maxWidth: '800px', width: '90%', maxHeight: '90vh', overflowY: 'auto', boxShadow: '0 10px 25px rgba(0,0,0,0.2)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+              <h3 style={{ margin: 0, fontSize: '1.5rem', color: '#333' }}>Relatório de Fabricantes</h3>
+              <button
+                onClick={() => setShowBoatsReport(false)}
+                style={{ background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer' }}
+              >
+                ✕
+              </button>
+            </div>
+
+            <table className="history-table" style={{ width: '100%', textAlign: 'left', borderCollapse: 'collapse' }}>
+              <thead>
+                <tr>
+                  <th style={{ padding: '0.75rem', borderBottom: '2px solid #ddd' }}>Fabricante</th>
+                  <th style={{ padding: '0.75rem', borderBottom: '2px solid #ddd' }}>Modelo</th>
+                  <th style={{ padding: '0.75rem', borderBottom: '2px solid #ddd' }}>Material</th>
+                  <th style={{ padding: '0.75rem', borderBottom: '2px solid #ddd' }}>Comprimento</th>
+                </tr>
+              </thead>
+              <tbody>
+                {boats.map((b: any, idx: number) => (
+                  <tr key={idx} style={{ borderBottom: '1px solid #eee' }}>
+                    <td style={{ padding: '0.75rem' }}><strong>{b.fabricante}</strong></td>
+                    <td style={{ padding: '0.75rem' }}>{b.modelo}</td>
+                    <td style={{ padding: '0.75rem' }}>{b.specs?.material || '-'}</td>
+                    <td style={{ padding: '0.75rem' }}>{b.specs?.comprimento || '-'}</td>
+                  </tr>
+                ))}
+                {boats.length === 0 && (
+                  <tr>
+                    <td colSpan={4} style={{ padding: '1.5rem', textAlign: 'center', color: '#666' }}>
+                      Nenhum fabricante registrado ainda.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+
+            <div style={{ marginTop: '2rem', textAlign: 'right' }}>
+              <button className="btn btn-ghost" onClick={() => setShowBoatsReport(false)}>Fechar</button>
+            </div>
+          </div>
         </div>
       )}
     </>
