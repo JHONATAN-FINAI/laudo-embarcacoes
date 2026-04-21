@@ -310,7 +310,10 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum, init
             <input type="file" accept=".json" style={{ display: 'none' }} onChange={handleImport} disabled={isImporting} />
           </label>
           <button className="btn btn-ghost btn-sm" onClick={handleSetCounter}>🔢 Ajustar Contador</button>
-          <button className="btn btn-secondary" onClick={handlePrint}>🖨 Imprimir Laudo</button>
+          <button className="btn btn-secondary" onClick={handlePrint}>
+            <span className="desktop-text">🖨 Imprimir Laudo</span>
+            <span className="mobile-text">📥 Salvar em PDF</span>
+          </button>
           <button className="btn btn-primary" onClick={handleSave}>💾 Salvar Laudo</button>
         </div>
       </header>
