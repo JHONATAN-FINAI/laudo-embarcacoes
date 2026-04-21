@@ -762,7 +762,8 @@ input[readonly] {
 @media print {
   @page {
     size: A4;
-    margin: 15mm 18mm 15mm 18mm;
+    margin: 0;
+    /* Let the .page padding act as the true document margin */
   }
 
   body,
@@ -770,6 +771,7 @@ input[readonly] {
     background: white !important;
     margin: 0;
     padding: 0;
+    min-width: 210mm !important;
   }
 
   .app-header,
@@ -794,40 +796,23 @@ input[readonly] {
     padding: 0;
   }
 
-  .doc-header {
-    margin: -8mm -18mm 8mm -18mm;
-    padding: 6mm 18mm 5mm 18mm;
-  }
-
   .page {
-    width: auto;
-    height: 267mm;
-    /* A4 297mm - 15mm top - 15mm bottom margins */
-    min-height: unset;
+    width: 210mm !important;
+    height: 297mm !important;
+    min-height: 297mm !important;
     box-shadow: none;
     border-radius: 0;
     page-break-after: always;
     break-after: page;
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .page:last-child {
-    page-break-after: avoid;
-    break-after: avoid;
+    margin: 0 !important;
   }
 
   .doc-body {
     flex: 1;
-    padding: 0 0 20mm 0;
   }
 
   .doc-footer {
+
     position: absolute;
     bottom: 0;
     left: 0;
