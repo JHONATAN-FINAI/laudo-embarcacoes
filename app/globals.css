@@ -10,23 +10,23 @@
   --gold-dark: #A1801C;
   --bg-gradient: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
   --white: #FFFFFF;
-  
+
   --text-main: #334155;
   --text-muted: #64748B;
   --border: #E2E8F0;
-  
+
   --danger: #EF4444;
   --danger-light: #FEE2E2;
   --success: #10B981;
   --success-light: #D1FAE5;
-  
+
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --radius-sm: 0.375rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
-  
+
   /* Transition */
   --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -46,7 +46,12 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Outfit', sans-serif;
 }
 
@@ -301,9 +306,11 @@ h1, h2, h3, h4, h5, h6 {
 .sidebar-body::-webkit-scrollbar {
   width: 6px;
 }
+
 .sidebar-body::-webkit-scrollbar-track {
   background: transparent;
 }
+
 .sidebar-body::-webkit-scrollbar-thumb {
   background: var(--border);
   border-radius: 4px;
@@ -337,7 +344,8 @@ label {
   margin-bottom: 0.4rem;
 }
 
-input[type=text], select {
+input[type=text],
+select {
   width: 100%;
   padding: 0.6rem 0.8rem;
   border: 1px solid var(--border);
@@ -350,7 +358,8 @@ input[type=text], select {
   outline: none;
 }
 
-input[type=text]:focus, select:focus {
+input[type=text]:focus,
+select:focus {
   border-color: var(--gold);
   background: var(--white);
   box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
@@ -473,8 +482,15 @@ input[readonly] {
 }
 
 @keyframes slideIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* A4 Document Preview */
@@ -571,7 +587,9 @@ input[readonly] {
 }
 
 /* Doc Body */
-.doc-body { flex-grow: 1; }
+.doc-body {
+  flex-grow: 1;
+}
 
 .doc-title {
   text-align: center;
@@ -742,13 +760,14 @@ input[readonly] {
 
 /* Print Rules */
 @media print {
-  @page { 
-    size: A4; 
-    margin: 15mm 18mm 15mm 18mm; 
+  @page {
+    size: A4;
+    margin: 15mm 18mm 15mm 18mm;
   }
 
-  body, html { 
-    background: white !important; 
+  body,
+  html {
+    background: white !important;
     margin: 0;
     padding: 0;
   }
@@ -756,7 +775,9 @@ input[readonly] {
   .app-header,
   .sidebar,
   .history-section,
-  #toast { display: none !important; }
+  #toast {
+    display: none !important;
+  }
 
   .workspace {
     display: block;
@@ -780,7 +801,8 @@ input[readonly] {
 
   .page {
     width: auto;
-    height: 267mm; /* A4 297mm - 15mm top - 15mm bottom margins */
+    height: 267mm;
+    /* A4 297mm - 15mm top - 15mm bottom margins */
     min-height: unset;
     box-shadow: none;
     border-radius: 0;
@@ -795,9 +817,9 @@ input[readonly] {
     flex-direction: column;
   }
 
-  .page:last-child { 
-    page-break-after: avoid; 
-    break-after: avoid; 
+  .page:last-child {
+    page-break-after: avoid;
+    break-after: avoid;
   }
 
   .doc-body {
@@ -805,7 +827,7 @@ input[readonly] {
     padding: 0 0 20mm 0;
   }
 
-  .doc-footer { 
+  .doc-footer {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -841,5 +863,43 @@ input[readonly] {
     margin-top: 10mm;
   }
 }
-/ *   R e s p o n s i v e   D e s i g n   * /   @ m e d i a   ( m a x - w i d t h :   1 0 2 4 p x )   {   . w o r k s p a c e   {   g r i d - t e m p l a t e - c o l u m n s :   1 f r ;   p a d d i n g :   1 r e m ;   g a p :   1 . 5 r e m ;   }   . s i d e b a r   {   p o s i t i o n :   r e l a t i v e ;   t o p :   0 ;   m a x - h e i g h t :   n o n e ;   }   . a p p - h e a d e r   {   h e i g h t :   a u t o ;   p a d d i n g :   1 r e m ;   f l e x - d i r e c t i o n :   c o l u m n ;   g a p :   1 r e m ;   }   . a p p - h e a d e r - r i g h t   {   f l e x - w r a p :   w r a p ;   j u s t i f y - c o n t e n t :   c e n t e r ;   w i d t h :   1 0 0 % ;   }   . p r e v i e w - a r e a   {   w i d t h :   1 0 0 % ;   o v e r f l o w - x :   a u t o ;   a l i g n - i t e m s :   f l e x - s t a r t ;   p a d d i n g - b o t t o m :   2 r e m ;   }   . p a g e   {   m a r g i n :   0 ;   m i n - w i d t h :   2 1 0 m m ;   }   }  
- 
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .workspace {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+
+  .sidebar {
+    position: relative;
+    top: 0;
+    max-height: none;
+  }
+
+  .app-header {
+    height: auto;
+    padding: 1rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .app-header-right {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .preview-area {
+    width: 100%;
+    overflow-x: auto;
+    align-items: flex-start;
+    padding-bottom: 2rem;
+  }
+
+  .page {
+    margin: 0;
+    min-width: 210mm;
+  }
+}
