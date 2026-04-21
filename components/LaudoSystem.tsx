@@ -284,6 +284,18 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum, init
     }
   }
 
+  const handlePrint = () => {
+    const originalTitle = document.title
+    const docNum = (num || '').replace('/', '.')
+    const propName = specs.proprietario ? specs.proprietario.split(',')[0].trim().toUpperCase() : 'CLIENTE'
+    document.title = `LAUDO N ${docNum} ${propName}`
+
+    window.print()
+
+    // Volta ao normal ao fechar a janela de impressora
+    document.title = originalTitle
+  }
+
   // Derived lists
   const fabricantes = Array.from(new Set(boats.map((b: any) => b.fabricante).filter(Boolean)))
   const modelosFiltrados = boats.filter((b: any) => (b.fabricante || '').toUpperCase() === (fabricante || '').toUpperCase()).map((b: any) => b.modelo).filter(Boolean)
@@ -298,7 +310,7 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum, init
             <input type="file" accept=".json" style={{ display: 'none' }} onChange={handleImport} disabled={isImporting} />
           </label>
           <button className="btn btn-ghost btn-sm" onClick={handleSetCounter}>🔢 Ajustar Contador</button>
-          <button className="btn btn-secondary" onClick={() => window.print()}>🖨 Imprimir Laudo</button>
+          <button className="btn btn-secondary" onClick={handlePrint}>🖨 Imprimir Laudo</button>
           <button className="btn btn-primary" onClick={handleSave}>💾 Salvar Laudo</button>
         </div>
       </header>
