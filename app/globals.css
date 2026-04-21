@@ -772,11 +772,14 @@ input[readonly] {
     margin: 0;
     padding: 0;
     min-width: 210mm !important;
+    -webkit-text-size-adjust: 100% !important;
+    text-size-adjust: 100% !important;
   }
 
   .app-header,
   .sidebar,
   .history-section,
+  .history-wrapper,
   #toast {
     display: none !important;
   }
@@ -830,31 +833,31 @@ input[readonly] {
     border-top: 1px solid #ccc;
   }
 
-  /* Reduce vertical spacing on page 1 to fit content */
+  /* Reduce vertical spacing on page 1 to fit content exactly on mobile engine */
   .doc-title {
-    margin-bottom: 6mm;
-    margin-top: 2mm;
+    margin-bottom: 4mm !important;
+    margin-top: 0mm !important;
   }
 
   .content-para {
-    margin-bottom: 4mm;
-    line-height: 1.5;
+    margin-bottom: 3mm !important;
+    line-height: 1.4 !important;
   }
 
   .specs-block {
-    margin: 3mm 0 5mm 4mm;
+    margin: 2mm 0 4mm 4mm !important;
   }
 
   .spec-item {
-    line-height: 1.5;
+    line-height: 1.4 !important;
   }
 
   .doc-city-date {
-    margin-top: 8mm;
+    margin-top: 4mm !important;
   }
 
   .signature-area {
-    margin-top: 10mm;
+    margin-top: 6mm !important;
   }
 }
 

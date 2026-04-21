@@ -581,7 +581,7 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum, init
         </div>
       </div>
 
-      <div style={{ maxWidth: '1600px', margin: '0 auto', padding: '0 2rem 2rem' }}>
+      <div className="history-wrapper" style={{ maxWidth: '1600px', margin: '0 auto', padding: '0 2rem 2rem' }}>
         <div className="history-section">
           <div className="history-header">
             <h3>Histórico de Laudos</h3>
