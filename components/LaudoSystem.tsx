@@ -193,7 +193,9 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum, init
   const handleAutoFill = (fab: string, mod: string) => {
     setFabricante(fab)
     setModelo(mod)
-    const boat = boats.find((b: any) => b.fabricante === fab.toUpperCase() && b.modelo === mod.toUpperCase())
+    const safeFab = (fab || '').toUpperCase()
+    const safeMod = (mod || '').toUpperCase()
+    const boat = boats.find((b: any) => (b.fabricante || '').toUpperCase() === safeFab && (b.modelo || '').toUpperCase() === safeMod)
     if (boat) {
       const loadedSpecs = { ...boat.specs }
       delete loadedSpecs.serie // Do not override serial
@@ -281,8 +283,8 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum, init
   }
 
   // Derived lists
-  const fabricantes = Array.from(new Set(boats.map((b: any) => b.fabricante)))
-  const modelosFiltrados = boats.filter((b: any) => b.fabricante === fabricante.toUpperCase()).map((b: any) => b.modelo)
+  const fabricantes = Array.from(new Set(boats.map((b: any) => b.fabricante).filter(Boolean)))
+  const modelosFiltrados = boats.filter((b: any) => (b.fabricante || '').toUpperCase() === (fabricante || '').toUpperCase()).map((b: any) => b.modelo).filter(Boolean)
 
   return (
     <>
@@ -325,7 +327,7 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum, init
                   onChange={e => handleAutoFill(e.target.value, modelo)}
                 />
                 <datalist id="listFab">
-                  {fabricantes.map((f: any) => <option key={f} value={f} />)}
+                  {fabricantes.map((f: any, idx) => <option key={`${f}-${idx}`} value={f} />)}
                 </datalist>
               </div>
 
@@ -338,7 +340,7 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum, init
                   onChange={e => handleAutoFill(fabricante, e.target.value)}
                 />
                 <datalist id="listMod">
-                  {modelosFiltrados.map((m: any) => <option key={m} value={m} />)}
+                  {modelosFiltrados.map((m: any, idx) => <option key={`${m}-${idx}`} value={m} />)}
                 </datalist>
               </div>
 
