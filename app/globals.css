@@ -873,7 +873,7 @@ input[readonly] {
   display: inline;
 }
 
-@media (max-width: 1024px) {
+@media screen and (max-width: 1024px) {
   .mobile-text {
     display: inline;
   }
