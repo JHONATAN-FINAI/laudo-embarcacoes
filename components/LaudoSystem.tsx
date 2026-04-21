@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { saveLaudo, deleteLaudo, setLaudoCounter } from '@/app/actions'
+import { saveLaudo, deleteLaudo, setLaudoCounter, saveEngenheiro } from '@/app/actions'
 
 const SPECS_FIELDS = [
   { id: 'tipo', label: 'a) Tipo', default: 'bote' },
@@ -19,11 +19,11 @@ const SPECS_FIELDS = [
   { id: 'proprietario', label: 'm) Proprietário', default: 'Nome do Cliente, CPF: 000.000.000-00' }
 ]
 
-export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: any) {
+export default function LaudoSystem({ initialLaudos, initialBoats, nextNum, initialEngenheiros }: any) {
   const [laudos, setLaudos] = useState(initialLaudos)
   const [boats, setBoats] = useState(initialBoats)
   const [isImporting, setIsImporting] = useState(false)
-  
+
   const [num, setNum] = useState(nextNum)
   const [fabricante, setFabricante] = useState('')
   const [modelo, setModelo] = useState('')
@@ -32,11 +32,11 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
   const [cidade, setCidade] = useState('Rondonópolis - MT')
   const [serie, setSerie] = useState('XXXX')
   const [specs, setSpecs] = useState<Record<string, string>>({})
-  
+
   const [logoBase64, setLogoBase64] = useState<string | null>(null)
   const [creaImageFrenteBase64, setCreaImageFrenteBase64] = useState<string | null>(null)
   const [creaImageVersoBase64, setCreaImageVersoBase64] = useState<string | null>(null)
-  
+
   // Dados da segunda página (CREA)
   const [nomeProfissional, setNomeProfissional] = useState('Douglas Germano da Silva')
   const [registroCrea, setRegistroCrea] = useState('MT05440')
@@ -48,14 +48,21 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
   const [dataExpedicao, setDataExpedicao] = useState('23/12/2020')
   const [pis, setPis] = useState('27682919 559/MT')
   const [filiacao, setFiliacao] = useState('JOÃO GERMANO DA SILVA')
-  
-  const [toast, setToast] = useState<{msg: string, visible: boolean}>({ msg: '', visible: false })
+
+  // Engineers logic
+  const [engenheiros, setEngenheiros] = useState(initialEngenheiros || [])
+  const [selectedEngenheiroId, setSelectedEngenheiroId] = useState('')
+  const [isAddingEngenheiro, setIsAddingEngenheiro] = useState(false)
+  const [newEngNome, setNewEngNome] = useState('')
+  const [newEngCrea, setNewEngCrea] = useState('')
+
+  const [toast, setToast] = useState<{ msg: string, visible: boolean }>({ msg: '', visible: false })
   const toastTimeout = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
     // Generate default date
     const today = new Date()
-    const months = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"]
+    const months = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"]
     setData(`${today.getDate()} de ${months[today.getMonth()]} de ${today.getFullYear()}`)
 
     // Specs defaults
@@ -70,7 +77,7 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
     // Check local CREA images
     const savedCreaImageFrente = localStorage.getItem('sistemmar_crea_image_frente')
     if (savedCreaImageFrente) setCreaImageFrenteBase64(savedCreaImageFrente)
-    
+
     const savedCreaImageVerso = localStorage.getItem('sistemmar_crea_image_verso')
     if (savedCreaImageVerso) setCreaImageVersoBase64(savedCreaImageVerso)
   }, [])
@@ -117,15 +124,16 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
     const payload = {
       num, fabricante, modelo, destino, data, cidade, specs: { ...specs, serie },
       // Dados profissionais (CREA)
-      nomeProfissional, registroCrea, tituloProfissional, cpfProfissional, 
-      dataNascimento, naturalidade, tipoSanguineo, dataExpedicao, pis, filiacao
+      nomeProfissional, registroCrea, tituloProfissional, cpfProfissional,
+      dataNascimento, naturalidade, tipoSanguineo, dataExpedicao, pis, filiacao,
+      engenheiroId: selectedEngenheiroId || null
     }
-    
+
     // Save to DB via Server Action
     await saveLaudo(payload)
 
     showToast("Laudo salvo com sucesso!")
-    
+
     // Update local state by forcing a refresh or optimistically
     // We update optimistically here for simplicity
     const existingIndex = laudos.findIndex((l: any) => l.num === num)
@@ -150,7 +158,7 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
     setDestino(laudo.destino || '')
     setData(laudo.data || '')
     setCidade(laudo.cidade || '')
-    
+
     const loadedSpecs = { ...laudo.specs }
     setSerie(loadedSpecs.serie || 'XXXX')
     delete loadedSpecs.serie
@@ -167,6 +175,8 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
     setDataExpedicao(laudo.dataExpedicao || '23/12/2020')
     setPis(laudo.pis || '27682919 559/MT')
     setFiliacao(laudo.filiacao || 'JOÃO GERMANO DA SILVA')
+
+    setSelectedEngenheiroId(laudo.engenheiroId || '')
 
     showToast("Laudo carregado para edição!")
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -219,6 +229,17 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
     reader.readAsText(file)
   }
 
+  const handleSaveEngenheiro = async () => {
+    if (!newEngNome || !newEngCrea) {
+      showToast("Preencha nome e CREA!")
+      return
+    }
+    await saveEngenheiro({ nome: newEngNome, crea: newEngCrea })
+    showToast("Engenheiro cadastrado!")
+    setIsAddingEngenheiro(false)
+    setTimeout(() => window.location.reload(), 1500)
+  }
+
   const handleSetCounter = async () => {
     const newVal = prompt("Digite o número do ÚLTIMO LAUDO já emitido (ex: 46):")
     if (!newVal) return
@@ -238,9 +259,9 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
     <>
       <header className="app-header">
         <div className="app-header-right">
-          <label className="btn btn-ghost btn-sm" style={{cursor: 'pointer'}} title="Importar backup (.json)">
+          <label className="btn btn-ghost btn-sm" style={{ cursor: 'pointer' }} title="Importar backup (.json)">
             ⬇ Migrar Antigos
-            <input type="file" accept=".json" style={{display: 'none'}} onChange={handleImport} disabled={isImporting} />
+            <input type="file" accept=".json" style={{ display: 'none' }} onChange={handleImport} disabled={isImporting} />
           </label>
           <button className="btn btn-ghost btn-sm" onClick={handleSetCounter}>🔢 Ajustar Contador</button>
           <button className="btn btn-secondary" onClick={() => window.print()}>🖨 Imprimir Laudo</button>
@@ -255,24 +276,24 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
             Dados do Laudo
           </div>
           <div className="sidebar-body">
-            
+
             <div className="form-section">
               <div className="form-section-title">Identificação</div>
-              
+
               <div className="form-group">
                 <label>Número do Laudo</label>
                 <div className="input-row">
-                  <input type="text" value={num} onChange={e => setNum(e.target.value)} style={{fontWeight: 'bold'}} />
+                  <input type="text" value={num} onChange={e => setNum(e.target.value)} style={{ fontWeight: 'bold' }} />
                 </div>
               </div>
 
               <div className="form-group">
                 <label>Fabricante</label>
-                <input 
-                  type="text" 
-                  list="listFab" 
-                  value={fabricante} 
-                  onChange={e => handleAutoFill(e.target.value, modelo)} 
+                <input
+                  type="text"
+                  list="listFab"
+                  value={fabricante}
+                  onChange={e => handleAutoFill(e.target.value, modelo)}
                 />
                 <datalist id="listFab">
                   {fabricantes.map((f: any) => <option key={f} value={f} />)}
@@ -281,11 +302,11 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
 
               <div className="form-group">
                 <label>Modelo</label>
-                <input 
-                  type="text" 
-                  list="listMod" 
-                  value={modelo} 
-                  onChange={e => handleAutoFill(fabricante, e.target.value)} 
+                <input
+                  type="text"
+                  list="listMod"
+                  value={modelo}
+                  onChange={e => handleAutoFill(fabricante, e.target.value)}
                 />
                 <datalist id="listMod">
                   {modelosFiltrados.map((m: any) => <option key={m} value={m} />)}
@@ -302,10 +323,10 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
 
               <div className="form-group">
                 <label>Número de Série</label>
-                <input 
-                  type="text" 
-                  value={serie} 
-                  onChange={e => setSerie(e.target.value)} 
+                <input
+                  type="text"
+                  value={serie}
+                  onChange={e => setSerie(e.target.value)}
                 />
               </div>
 
@@ -316,10 +337,10 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
               {SPECS_FIELDS.map(f => (
                 <div className="form-group" key={f.id}>
                   <label>{f.label}</label>
-                  <input 
-                    type="text" 
-                    value={specs[f.id] || ''} 
-                    onChange={e => setSpecs({...specs, [f.id]: e.target.value})} 
+                  <input
+                    type="text"
+                    value={specs[f.id] || ''}
+                    onChange={e => setSpecs({ ...specs, [f.id]: e.target.value })}
                   />
                 </div>
               ))}
@@ -339,21 +360,52 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
 
             <div className="form-section">
               <div className="form-section-title">Dados Profissionais (CREA)</div>
+
+              <div className="form-group">
+                <label>Selecionar Engenheiro</label>
+                <select
+                  className="w-full"
+                  value={selectedEngenheiroId}
+                  onChange={e => setSelectedEngenheiroId(e.target.value)}
+                  style={{ marginBottom: '0.5rem', width: '100%', padding: '0.5rem', borderRadius: '4px', border: '1px solid #ccc' }}
+                >
+                  <option value="">-- Selecione --</option>
+                  {engenheiros.map((eng: any) => (
+                    <option key={eng.id} value={eng.id}>{eng.nome}</option>
+                  ))}
+                </select>
+
+                {!isAddingEngenheiro ? (
+                  <button className="btn btn-sm btn-ghost" onClick={() => setIsAddingEngenheiro(true)} style={{ width: '100%', marginTop: '0.5rem', textAlign: 'center' }}>
+                    + Novo Engenheiro
+                  </button>
+                ) : (
+                  <div style={{ marginTop: '0.5rem', padding: '0.5rem', border: '1px solid #ddd', borderRadius: '4px', background: '#f9f9f9' }}>
+                    <input type="text" placeholder="Nome Completo" value={newEngNome} onChange={e => setNewEngNome(e.target.value)} style={{ marginBottom: '0.5rem', width: '100%' }} />
+                    <input type="text" placeholder="Número CREA" value={newEngCrea} onChange={e => setNewEngCrea(e.target.value)} style={{ marginBottom: '0.5rem', width: '100%' }} />
+                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                      <button className="btn btn-sm btn-primary" onClick={handleSaveEngenheiro}>Salvar</button>
+                      <button className="btn btn-sm btn-ghost" onClick={() => setIsAddingEngenheiro(false)}>Cancelar</button>
+                    </div>
+                  </div>
+                )}
+              </div>
+
               <div className="form-group">
                 <label>Carteira CREA - Frente</label>
-                <label className="btn btn-sm btn-ghost" style={{cursor: 'pointer', display: 'block', textAlign: 'center', width: '100%'}}>
+                <label className="btn btn-sm btn-ghost" style={{ cursor: 'pointer', display: 'block', textAlign: 'center', width: '100%' }}>
                   📷 Upload Frente
-                  <input type="file" accept="image/*" style={{display: 'none'}} onChange={(e) => handleCreaImageUpload(e, 'frente')} />
+                  <input type="file" accept="image/*" style={{ display: 'none' }} onChange={(e) => handleCreaImageUpload(e, 'frente')} />
                 </label>
-                {creaImageFrenteBase64 && <div style={{fontSize: '0.75rem', marginTop: '0.5rem', color: '#666'}}>✓ Frente carregada</div>}
+                {creaImageFrenteBase64 && <div style={{ fontSize: '0.75rem', marginTop: '0.5rem', color: '#666' }}>✓ Frente carregada</div>}
               </div>
               <div className="form-group">
                 <label>Carteira CREA - Verso</label>
-                <label className="btn btn-sm btn-ghost" style={{cursor: 'pointer', display: 'block', textAlign: 'center', width: '100%'}}>
+                <label className="btn btn-sm btn-ghost" style={{ cursor: 'pointer', display: 'block', textAlign: 'center', width: '100%' }}>
                   📷 Upload Verso
-                  <input type="file" accept="image/*" style={{display: 'none'}} onChange={(e) => handleCreaImageUpload(e, 'verso')} />
+                  <input type="file" accept="image/*" style={{ display: 'none' }} onChange={(e) => handleCreaImageUpload(e, 'verso')} />
                 </label>
-                {creaImageVersoBase64 && <div style={{fontSize: '0.75rem', marginTop: '0.5rem', color: '#666'}}>✓ Verso carregado</div>}
+                {creaImageVersoBase64 && <div style={{ fontSize: '0.75rem', marginTop: '0.5rem', color: '#666' }}>✓ Verso carregado</div>}
               </div>
             </div>
 
@@ -370,11 +422,11 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
 
             <div className="doc-body">
               <div className="doc-title">Declaração de Construção</div>
-              
+
               <div className="content-para">
-                Declaro, para comprovação perante a <strong>{destino}</strong>, 
-                que a embarcação <strong>{modelo || '[MODELO]'}</strong>, 
-                construtor <strong>{fabricante || '[FABRICANTE]'}</strong>, 
+                Declaro, para comprovação perante a <strong>{destino}</strong>,
+                que a embarcação <strong>{modelo || '[MODELO]'}</strong>,
+                construtor <strong>{fabricante || '[FABRICANTE]'}</strong>,
                 número de série: <strong>{serie || '[SÉRIE]'}</strong>, com as seguintes características:
               </div>
 
@@ -404,9 +456,17 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
               <div className="doc-city-date">{cidade}, {data}</div>
 
               <div className="signature-area">
-                <div className="sig-line">Douglas Germano da Silva</div>
+                <div className="sig-line">
+                  {selectedEngenheiroId
+                    ? engenheiros.find((e: any) => e.id === selectedEngenheiroId)?.nome
+                    : nomeProfissional}
+                </div>
                 <div className="sig-sub">Engenheiro Mecânico</div>
-                <div className="sig-sub">CREA MT05440</div>
+                <div className="sig-sub">
+                  CREA {selectedEngenheiroId
+                    ? engenheiros.find((e: any) => e.id === selectedEngenheiroId)?.crea
+                    : registroCrea}
+                </div>
               </div>
             </div>
 
@@ -427,27 +487,27 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
 
             <div className="doc-body">
               <div className="doc-title">Carteira de Habilitação Profissional — CREA</div>
-              
-              <div style={{margin: '2rem 0', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: '2rem'}}>
+
+              <div style={{ margin: '2rem 0', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: '2rem' }}>
                 {creaImageFrenteBase64 ? (
-                  <div style={{width: '100%', maxWidth: '500px', textAlign: 'center'}}>
-                    <img src={creaImageFrenteBase64} alt="Carteira CREA Frente" style={{maxWidth: '100%', height: 'auto'}} />
-                    <div style={{fontSize: '0.8rem', marginTop: '0.5rem', color: '#666'}}>Frente</div>
+                  <div style={{ width: '100%', maxWidth: '500px', textAlign: 'center' }}>
+                    <img src={creaImageFrenteBase64} alt="Carteira CREA Frente" style={{ maxWidth: '100%', height: 'auto' }} />
+                    <div style={{ fontSize: '0.8rem', marginTop: '0.5rem', color: '#666' }}>Frente</div>
                   </div>
                 ) : (
-                  <div style={{width: '100%', maxWidth: '500px', textAlign: 'center', padding: '3rem 1rem', border: '2px dashed #ccc', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '350px'}}>
-                    <span style={{color: '#999'}}>Frente</span>
+                  <div style={{ width: '100%', maxWidth: '500px', textAlign: 'center', padding: '3rem 1rem', border: '2px dashed #ccc', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '350px' }}>
+                    <span style={{ color: '#999' }}>Frente</span>
                   </div>
                 )}
-                
+
                 {creaImageVersoBase64 ? (
-                  <div style={{width: '100%', maxWidth: '500px', textAlign: 'center'}}>
-                    <img src={creaImageVersoBase64} alt="Carteira CREA Verso" style={{maxWidth: '100%', height: 'auto'}} />
-                    <div style={{fontSize: '0.8rem', marginTop: '0.5rem', color: '#666'}}>Verso</div>
+                  <div style={{ width: '100%', maxWidth: '500px', textAlign: 'center' }}>
+                    <img src={creaImageVersoBase64} alt="Carteira CREA Verso" style={{ maxWidth: '100%', height: 'auto' }} />
+                    <div style={{ fontSize: '0.8rem', marginTop: '0.5rem', color: '#666' }}>Verso</div>
                   </div>
                 ) : (
-                  <div style={{width: '100%', maxWidth: '500px', textAlign: 'center', padding: '3rem 1rem', border: '2px dashed #ccc', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '350px'}}>
-                    <span style={{color: '#999'}}>Verso</span>
+                  <div style={{ width: '100%', maxWidth: '500px', textAlign: 'center', padding: '3rem 1rem', border: '2px dashed #ccc', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '350px' }}>
+                    <span style={{ color: '#999' }}>Verso</span>
                   </div>
                 )}
               </div>
@@ -467,7 +527,7 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
             <h3>Histórico de Laudos</h3>
             <span className="history-count">{laudos.length} laudos</span>
           </div>
-          <div style={{overflowX: 'auto'}}>
+          <div style={{ overflowX: 'auto' }}>
             <table className="history-table">
               <thead>
                 <tr>
@@ -487,13 +547,13 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum }: an
                     <td>{l.data || '—'}</td>
                     <td>
                       <button className="btn-ghost btn-sm" onClick={() => handleEdit(l.num)}>✏ Editar</button>
-                      <button className="btn-danger btn-sm" style={{marginLeft: '0.5rem'}} onClick={() => handleDelete(l.num)}>✕ Excluir</button>
+                      <button className="btn-danger btn-sm" style={{ marginLeft: '0.5rem' }} onClick={() => handleDelete(l.num)}>✕ Excluir</button>
                     </td>
                   </tr>
                 ))}
                 {laudos.length === 0 && (
                   <tr>
-                    <td colSpan={5} style={{textAlign: 'center', padding: '2rem'}}>Nenhum laudo registrado no banco online ainda.</td>
+                    <td colSpan={5} style={{ textAlign: 'center', padding: '2rem' }}>Nenhum laudo registrado no banco online ainda.</td>
                   </tr>
                 )}
               </tbody>

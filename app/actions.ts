@@ -5,14 +5,37 @@ import { revalidatePath } from 'next/cache'
 
 export async function getLaudos() {
   return await prisma.laudo.findMany({
+    include: {
+      engenheiro: true
+    },
     orderBy: { createdAt: 'desc' }
   })
 }
 
 export async function getLaudo(num: string) {
   return await prisma.laudo.findUnique({
-    where: { num }
+    where: { num },
+    include: {
+      engenheiro: true
+    }
   })
+}
+
+export async function getEngenheiros() {
+  return await prisma.engenheiro.findMany({
+    orderBy: { nome: 'asc' }
+  })
+}
+
+export async function saveEngenheiro(data: { nome: string; crea: string }) {
+  await prisma.engenheiro.create({
+    data: {
+      nome: data.nome,
+      crea: data.crea
+    }
+  })
+  revalidatePath('/')
+  return { success: true }
 }
 
 export async function getBoatTemplates() {
@@ -33,6 +56,7 @@ export async function saveLaudo(data: any) {
         data: data.data,
         cidade: data.cidade,
         specs: data.specs,
+        engenheiroId: data.engenheiroId || null,
       }
     })
   } else {
@@ -45,6 +69,7 @@ export async function saveLaudo(data: any) {
         data: data.data,
         cidade: data.cidade,
         specs: data.specs,
+        engenheiroId: data.engenheiroId || null,
       }
     })
     
