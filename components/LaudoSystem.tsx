@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { saveLaudo, deleteLaudo, setLaudoCounter, saveEngenheiro } from '@/app/actions'
+import { saveLaudo, deleteLaudo, setLaudoCounter, saveEngenheiro, updateEngenheiro, deleteEngenheiro } from '@/app/actions'
 
 const SPECS_FIELDS = [
   { id: 'tipo', label: 'a) Tipo', default: 'bote' },
@@ -53,6 +53,7 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum, init
   const [engenheiros, setEngenheiros] = useState(initialEngenheiros || [])
   const [selectedEngenheiroId, setSelectedEngenheiroId] = useState('')
   const [isAddingEngenheiro, setIsAddingEngenheiro] = useState(false)
+  const [editingEngenheiroId, setEditingEngenheiroId] = useState<string | null>(null)
   const [newEngNome, setNewEngNome] = useState('')
   const [newEngCrea, setNewEngCrea] = useState('')
 
@@ -234,10 +235,38 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum, init
       showToast("Preencha nome e CREA!")
       return
     }
-    await saveEngenheiro({ nome: newEngNome, crea: newEngCrea })
-    showToast("Engenheiro cadastrado!")
+    if (editingEngenheiroId) {
+      await updateEngenheiro(editingEngenheiroId, { nome: newEngNome, crea: newEngCrea })
+      showToast("Engenheiro atualizado!")
+    } else {
+      await saveEngenheiro({ nome: newEngNome, crea: newEngCrea })
+      showToast("Engenheiro cadastrado!")
+    }
     setIsAddingEngenheiro(false)
+    setEditingEngenheiroId(null)
     setTimeout(() => window.location.reload(), 1500)
+  }
+
+  const handleDeleteEngenheiro = async (id: string, nome: string) => {
+    if (!confirm(`Deseja realmente excluir o engenheiro ${nome}?`)) return
+    const res = await deleteEngenheiro(id)
+    if (res.success) {
+      showToast("Engenheiro excluído!")
+      if (selectedEngenheiroId === id) setSelectedEngenheiroId('')
+      setTimeout(() => window.location.reload(), 1500)
+    } else {
+      showToast("Erro ao excluir. Podem haver laudos vinculados a este engenheiro.")
+    }
+  }
+
+  const handleEditEngenheiro = () => {
+    const eng = engenheiros.find((e: any) => e.id === selectedEngenheiroId)
+    if (eng) {
+      setEditingEngenheiroId(eng.id)
+      setNewEngNome(eng.nome)
+      setNewEngCrea(eng.crea)
+      setIsAddingEngenheiro(true)
+    }
   }
 
   const handleSetCounter = async () => {
@@ -363,24 +392,33 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum, init
 
               <div className="form-group">
                 <label>Selecionar Engenheiro</label>
-                <select
-                  className="w-full"
-                  value={selectedEngenheiroId}
-                  onChange={e => setSelectedEngenheiroId(e.target.value)}
-                  style={{ marginBottom: '0.5rem', width: '100%', padding: '0.5rem', borderRadius: '4px', border: '1px solid #ccc' }}
-                >
-                  <option value="">-- Selecione --</option>
-                  {engenheiros.map((eng: any) => (
-                    <option key={eng.id} value={eng.id}>{eng.nome}</option>
-                  ))}
-                </select>
+                <div style={{ display: 'flex', gap: '0.25rem', marginBottom: '0.5rem' }}>
+                  <select
+                    className="w-full"
+                    value={selectedEngenheiroId}
+                    onChange={e => setSelectedEngenheiroId(e.target.value)}
+                    style={{ flex: 1, padding: '0.5rem', borderRadius: '4px', border: '1px solid #ccc' }}
+                  >
+                    <option value="">-- Selecione --</option>
+                    {engenheiros.map((eng: any) => (
+                      <option key={eng.id} value={eng.id}>{eng.nome}</option>
+                    ))}
+                  </select>
+                  {selectedEngenheiroId && (
+                    <>
+                      <button className="btn btn-sm btn-ghost" onClick={handleEditEngenheiro} title="Editar Engenheiro" style={{ padding: '0.5rem' }}>✏️</button>
+                      <button className="btn btn-sm btn-ghost" onClick={() => handleDeleteEngenheiro(selectedEngenheiroId, engenheiros.find((e: any) => e.id === selectedEngenheiroId)?.nome)} title="Excluir Engenheiro" style={{ padding: '0.5rem', color: 'red' }}>🗑️</button>
+                    </>
+                  )}
+                </div>
 
                 {!isAddingEngenheiro ? (
-                  <button className="btn btn-sm btn-ghost" onClick={() => setIsAddingEngenheiro(true)} style={{ width: '100%', marginTop: '0.5rem', textAlign: 'center' }}>
+                  <button className="btn btn-sm btn-ghost" onClick={() => { setIsAddingEngenheiro(true); setEditingEngenheiroId(null); setNewEngNome(''); setNewEngCrea(''); }} style={{ width: '100%', marginTop: '0.5rem', textAlign: 'center' }}>
                     + Novo Engenheiro
                   </button>
                 ) : (
                   <div style={{ marginTop: '0.5rem', padding: '0.5rem', border: '1px solid #ddd', borderRadius: '4px', background: '#f9f9f9' }}>
+                    <div style={{ fontSize: '0.85rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>{editingEngenheiroId ? 'Editar Engenheiro' : 'Novo Engenheiro'}</div>
                     <input type="text" placeholder="Nome Completo" value={newEngNome} onChange={e => setNewEngNome(e.target.value)} style={{ marginBottom: '0.5rem', width: '100%' }} />
                     <input type="text" placeholder="Número CREA" value={newEngCrea} onChange={e => setNewEngCrea(e.target.value)} style={{ marginBottom: '0.5rem', width: '100%' }} />
                     <div style={{ display: 'flex', gap: '0.5rem' }}>

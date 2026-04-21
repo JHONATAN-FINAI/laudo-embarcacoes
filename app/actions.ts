@@ -38,6 +38,30 @@ export async function saveEngenheiro(data: { nome: string; crea: string }) {
   return { success: true }
 }
 
+export async function updateEngenheiro(id: string, data: { nome: string; crea: string }) {
+  await prisma.engenheiro.update({
+    where: { id },
+    data: {
+      nome: data.nome,
+      crea: data.crea
+    }
+  })
+  revalidatePath('/')
+  return { success: true }
+}
+
+export async function deleteEngenheiro(id: string) {
+  try {
+    await prisma.engenheiro.delete({
+      where: { id }
+    })
+    revalidatePath('/')
+    return { success: true }
+  } catch (error) {
+    return { success: false, error: "Erro ao excluir: pode haver laudos vinculados." }
+  }
+}
+
 export async function getBoatTemplates() {
   return await prisma.boatTemplate.findMany({
     orderBy: { fabricante: 'asc' }
@@ -72,7 +96,7 @@ export async function saveLaudo(data: any) {
         engenheiroId: data.engenheiroId || null,
       }
     })
-    
+
     const numValue = parseInt(data.num.split('/')[0])
     if (!isNaN(numValue)) {
       const config = await prisma.appConfig.findUnique({ where: { key: 'laudoCounter' } })
