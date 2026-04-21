@@ -330,7 +330,7 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum, init
                   onChange={e => handleAutoFill(e.target.value, modelo)}
                 />
                 <datalist id="listFab">
-                  {fabricantes.map((f: any, idx) => <option key={`${f}-${idx}`} value={f} />)}
+                  {fabricantes.map((f: any, idx: number) => <option key={`${f}-${idx}`} value={f} />)}
                 </datalist>
               </div>
 
@@ -343,7 +343,7 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum, init
                   onChange={e => handleAutoFill(fabricante, e.target.value)}
                 />
                 <datalist id="listMod">
-                  {modelosFiltrados.map((m: any, idx) => <option key={`${m}-${idx}`} value={m} />)}
+                  {modelosFiltrados.map((m: any, idx: number) => <option key={`${m}-${idx}`} value={m} />)}
                 </datalist>
               </div>
 
