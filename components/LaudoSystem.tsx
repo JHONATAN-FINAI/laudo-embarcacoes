@@ -530,7 +530,6 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum, init
 
             <div className="doc-footer">
               <div className="footer-left">
-                Rondonópolis – MT
               </div>
               <div className="footer-page">1</div>
             </div>
@@ -573,7 +572,6 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum, init
 
             <div className="doc-footer">
               <div className="footer-left">
-                Rondonópolis – MT
               </div>
               <div className="footer-page">2</div>
             </div>
