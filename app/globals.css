@@ -762,16 +762,17 @@ input[readonly] {
 @media print {
   @page {
     size: A4;
-    margin: 0;
-    /* Let the .page padding act as the true document margin */
+    margin: 0 !important;
   }
 
   body,
   html {
     background: white !important;
-    margin: 0;
-    padding: 0;
+    margin: 0 !important;
+    padding: 0 !important;
     min-width: 210mm !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
     -webkit-text-size-adjust: 100% !important;
     text-size-adjust: 100% !important;
   }
@@ -784,57 +785,59 @@ input[readonly] {
     display: none !important;
   }
 
-  .workspace {
-    display: block;
-    padding: 0;
-    margin: 0;
-    max-width: none;
-  }
-
   .preview-area {
-    display: block;
-    gap: 0;
-    align-items: unset;
-    margin: 0;
-    padding: 0;
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   .page {
-    width: 100% !important;
-    max-width: 210mm !important;
-    height: 100vh !important;
-    max-height: 100vh !important;
+    width: 210mm !important;
+    height: 296mm !important;
+    /* 1mm mechanical margin to prevent phantom blank bleed on WebKit */
     box-sizing: border-box !important;
     position: relative !important;
-    display: flex !important;
-    flex-direction: column !important;
+    display: block !important;
+    /* Block solves flex fragmentation anomalies */
     box-shadow: none !important;
     border-radius: 0 !important;
-    page-break-after: always;
-    break-after: page;
+    page-break-after: always !important;
+    break-after: page !important;
     page-break-inside: avoid !important;
     overflow: hidden !important;
-    margin: 0 auto !important;
+    margin: 0 !important;
+    padding: 15mm 18mm !important;
+    /* Manual padding replaces the @page native margins */
   }
 
   .page:last-child {
-    page-break-after: avoid;
-    break-after: avoid;
+    page-break-after: auto !important;
+    break-after: auto !important;
+  }
+
+  .doc-header {
+    margin: 0 !important;
+    padding: 0 0 5mm 0 !important;
+    border-bottom: 3px solid #020617 !important;
+  }
+
+  .doc-header::after {
+    display: none !important;
   }
 
   .doc-body {
-    flex: 1;
-    padding-bottom: 0 !important;
+    padding-top: 5mm !important;
   }
 
   .doc-footer {
-    position: relative !important;
-    bottom: auto !important;
-    left: auto !important;
-    right: auto !important;
-    margin-top: auto !important;
-    border-top: 1px solid #ccc;
-    padding: 2mm 0 4mm 0 !important;
+    position: absolute !important;
+    bottom: 12mm !important;
+    left: 18mm !important;
+    right: 18mm !important;
+    border-top: 1px solid #ccc !important;
+    padding: 4mm 0 0 0 !important;
+    display: flex !important;
+    justify-content: flex-end !important;
   }
 
   /* Reduce vertical spacing on page 1 to fit content exactly on mobile engine */
