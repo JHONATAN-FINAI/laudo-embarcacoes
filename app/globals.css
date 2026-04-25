@@ -761,19 +761,23 @@ input[readonly] {
 /* Print Rules */
 @media print {
   @page {
-    size: A4;
+    size: A4 portrait;
     margin: 15mm 18mm 15mm 18mm;
   }
 
-  body,
-  html {
+  html,
+  body {
+    width: 210mm !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
     background: white !important;
-    margin: 0;
-    padding: 0;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+    /* Override iOS Safari font scaling */
     -webkit-text-size-adjust: 100% !important;
     text-size-adjust: 100% !important;
+    font-size: 11.5pt !important;
   }
 
   .app-header,
@@ -785,90 +789,108 @@ input[readonly] {
   }
 
   .workspace {
-    display: block;
-    padding: 0;
-    margin: 0;
-    max-width: none;
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+    grid-template-columns: unset !important;
   }
 
   .preview-area {
-    display: block;
-    gap: 0;
-    align-items: unset;
-    margin: 0;
-    padding: 0;
+    display: block !important;
+    gap: 0 !important;
+    align-items: unset !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
   }
 
   .page {
+    /* Force A4 dimensions regardless of screen size */
     width: 174mm !important;
     max-width: 174mm !important;
     height: 267mm !important;
     max-height: 267mm !important;
-    min-height: unset;
-    box-shadow: none;
-    border-radius: 0;
-    page-break-after: always;
-    break-after: page;
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    position: relative;
-    display: flex;
-    flex-direction: column;
+    min-height: unset !important;
+    /* Reset all mobile overrides */
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    /* One page per .page element */
+    page-break-after: always !important;
+    break-after: page !important;
+    overflow: hidden !important;
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    /* Reset mobile font size */
+    font-size: 11pt !important;
   }
 
   .page:last-child {
-    page-break-after: avoid;
-    break-after: avoid;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
   }
 
   .doc-header {
     margin: -8mm -18mm 8mm -18mm !important;
     padding: 6mm 18mm 5mm 18mm !important;
+    /* Undo mobile padding */
+    left: unset !important;
+    right: unset !important;
   }
 
   .doc-body {
-    flex: 1;
-    padding: 0 0 20mm 0;
+    flex: 1 !important;
+    padding: 0 0 20mm 0 !important;
   }
 
   .doc-footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 0 0 4mm;
-    border-top: 1px solid #ccc;
-    display: flex;
-    justify-content: flex-end;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 0 0 4mm !important;
+    border-top: 1px solid #ccc !important;
+    display: flex !important;
+    justify-content: flex-end !important;
   }
 
-  /* Keep the slight space reductions from earlier to prevent internal overflow wraps */
   .doc-title {
-    margin-bottom: 4mm;
-    margin-top: 0;
+    margin-bottom: 4mm !important;
+    margin-top: 0 !important;
   }
 
   .content-para {
-    margin-bottom: 3mm;
-    line-height: 1.4;
+    margin-bottom: 3mm !important;
+    line-height: 1.4 !important;
   }
 
   .specs-block {
-    margin: 2mm 0 4mm 4mm;
+    margin: 2mm 0 4mm 4mm !important;
   }
 
   .spec-item {
-    line-height: 1.4;
+    line-height: 1.4 !important;
   }
 
   .doc-city-date {
-    margin-top: 4mm;
+    margin-top: 4mm !important;
   }
 
   .signature-area {
-    margin-top: 6mm;
+    margin-top: 6mm !important;
+  }
+
+  /* Undo mobile table layout overrides */
+  .history-table,
+  .history-table thead,
+  .history-table tbody,
+  .history-table tr,
+  .history-table td {
+    display: revert !important;
   }
 }
 
