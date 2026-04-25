@@ -806,12 +806,11 @@ input[readonly] {
   }
 
   .page {
-    /* Área útil ABNT: 210 - 30 - 20 = 160mm largura, 297 - 30 - 20 = 247mm altura */
     width: 160mm !important;
     max-width: 160mm !important;
-    height: 247mm !important;
-    max-height: 247mm !important;
-    min-height: unset !important;
+    min-height: 247mm !important;
+    height: auto !important;
+    max-height: none !important;
     margin: 0 auto !important;
     padding: 0 !important;
     box-sizing: border-box !important;
@@ -819,7 +818,7 @@ input[readonly] {
     border-radius: 0 !important;
     page-break-after: always !important;
     break-after: page !important;
-    overflow: hidden !important;
+    overflow: visible !important;
     position: relative !important;
     display: flex !important;
     flex-direction: column !important;
@@ -873,7 +872,8 @@ input[readonly] {
 
   .spec-label {
     font-size: 12pt !important;
-    width: 200px !important;
+    width: 155px !important;
+    min-width: 155px !important;
   }
 
   .spec-value {
