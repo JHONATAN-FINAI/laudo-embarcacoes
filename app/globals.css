@@ -761,7 +761,7 @@ input[readonly] {
 /* Print Rules */
 @media print {
   @page {
-    size: A4;
+    size: auto;
     margin: 0 !important;
   }
 
@@ -770,7 +770,7 @@ input[readonly] {
     background: white !important;
     margin: 0 !important;
     padding: 0 !important;
-    min-width: 210mm !important;
+    width: auto !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
     -webkit-text-size-adjust: 100% !important;
@@ -792,13 +792,13 @@ input[readonly] {
   }
 
   .page {
-    width: 210mm !important;
-    height: 296mm !important;
-    /* 1mm mechanical margin to prevent phantom blank bleed on WebKit */
+    width: 100% !important;
+    height: 99vh !important;
+    /* 99vh perfectly spans 1 virtual sheet minus 1% precision buffer */
+    max-height: 99vh !important;
     box-sizing: border-box !important;
     position: relative !important;
     display: block !important;
-    /* Block solves flex fragmentation anomalies */
     box-shadow: none !important;
     border-radius: 0 !important;
     page-break-after: always !important;
@@ -806,8 +806,8 @@ input[readonly] {
     page-break-inside: avoid !important;
     overflow: hidden !important;
     margin: 0 !important;
-    padding: 15mm 18mm !important;
-    /* Manual padding replaces the @page native margins */
+    padding: 10mm 15mm 12mm 15mm !important;
+    /* Reduced padding slightly to accommodate scaling */
   }
 
   .page:last-child {
@@ -831,9 +831,9 @@ input[readonly] {
 
   .doc-footer {
     position: absolute !important;
-    bottom: 12mm !important;
-    left: 18mm !important;
-    right: 18mm !important;
+    bottom: 8mm !important;
+    left: 15mm !important;
+    right: 15mm !important;
     border-top: 1px solid #ccc !important;
     padding: 4mm 0 0 0 !important;
     display: flex !important;
