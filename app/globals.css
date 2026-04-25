@@ -761,16 +761,15 @@ input[readonly] {
 /* Print Rules */
 @media print {
   @page {
-    size: auto;
-    margin: 0 !important;
+    size: A4;
+    margin: 15mm 18mm 15mm 18mm;
   }
 
   body,
   html {
     background: white !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    width: auto !important;
+    margin: 0;
+    padding: 0;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
     -webkit-text-size-adjust: 100% !important;
@@ -785,86 +784,91 @@ input[readonly] {
     display: none !important;
   }
 
+  .workspace {
+    display: block;
+    padding: 0;
+    margin: 0;
+    max-width: none;
+  }
+
   .preview-area {
-    display: block !important;
-    margin: 0 !important;
-    padding: 0 !important;
+    display: block;
+    gap: 0;
+    align-items: unset;
+    margin: 0;
+    padding: 0;
   }
 
   .page {
-    width: 100% !important;
-    height: 99vh !important;
-    /* 99vh perfectly spans 1 virtual sheet minus 1% precision buffer */
-    max-height: 99vh !important;
-    box-sizing: border-box !important;
-    position: relative !important;
-    display: block !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-    page-break-after: always !important;
-    break-after: page !important;
-    page-break-inside: avoid !important;
-    overflow: hidden !important;
-    margin: 0 !important;
-    padding: 10mm 15mm 12mm 15mm !important;
-    /* Reduced padding slightly to accommodate scaling */
+    width: 174mm !important;
+    max-width: 174mm !important;
+    height: 267mm !important;
+    max-height: 267mm !important;
+    min-height: unset;
+    box-shadow: none;
+    border-radius: 0;
+    page-break-after: always;
+    break-after: page;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    flex-direction: column;
   }
 
   .page:last-child {
-    page-break-after: auto !important;
-    break-after: auto !important;
+    page-break-after: avoid;
+    break-after: avoid;
   }
 
   .doc-header {
-    margin: 0 !important;
-    padding: 0 0 5mm 0 !important;
-    border-bottom: 3px solid #020617 !important;
-  }
-
-  .doc-header::after {
-    display: none !important;
+    margin: -8mm -18mm 8mm -18mm !important;
+    padding: 6mm 18mm 5mm 18mm !important;
   }
 
   .doc-body {
-    padding-top: 5mm !important;
+    flex: 1;
+    padding: 0 0 20mm 0;
   }
 
   .doc-footer {
-    position: absolute !important;
-    bottom: 8mm !important;
-    left: 15mm !important;
-    right: 15mm !important;
-    border-top: 1px solid #ccc !important;
-    padding: 4mm 0 0 0 !important;
-    display: flex !important;
-    justify-content: flex-end !important;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0 0 4mm;
+    border-top: 1px solid #ccc;
+    display: flex;
+    justify-content: flex-end;
   }
 
-  /* Reduce vertical spacing on page 1 to fit content exactly on mobile engine */
+  /* Keep the slight space reductions from earlier to prevent internal overflow wraps */
   .doc-title {
-    margin-bottom: 4mm !important;
-    margin-top: 0mm !important;
+    margin-bottom: 4mm;
+    margin-top: 0;
   }
 
   .content-para {
-    margin-bottom: 3mm !important;
-    line-height: 1.4 !important;
+    margin-bottom: 3mm;
+    line-height: 1.4;
   }
 
   .specs-block {
-    margin: 2mm 0 4mm 4mm !important;
+    margin: 2mm 0 4mm 4mm;
   }
 
   .spec-item {
-    line-height: 1.4 !important;
+    line-height: 1.4;
   }
 
   .doc-city-date {
-    margin-top: 4mm !important;
+    margin-top: 4mm;
   }
 
   .signature-area {
-    margin-top: 6mm !important;
+    margin-top: 6mm;
   }
 }
 
