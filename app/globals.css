@@ -855,46 +855,49 @@ input[readonly] {
 
   .doc-title {
     font-size: 13pt !important;
-    margin-bottom: 8mm !important;
+    margin-bottom: 5mm !important;
     margin-top: 0 !important;
   }
 
   .content-para {
-    font-size: 12pt !important;
-    margin-bottom: 5mm !important;
-    line-height: 1.5 !important;
+    font-size: 11.5pt !important;
+    margin-bottom: 3mm !important;
+    line-height: 1.45 !important;
     text-align: justify !important;
   }
 
   .specs-block {
-    margin: 4mm 0 6mm 6mm !important;
+    margin: 3mm 0 4mm 0 !important;
+    width: 100% !important;
   }
 
   .spec-label {
-    font-size: 12pt !important;
-    width: 155px !important;
-    min-width: 155px !important;
+    font-size: 11.5pt !important;
+    width: 52% !important;
+    min-width: unset !important;
+    white-space: nowrap !important;
   }
 
   .spec-value {
-    font-size: 12pt !important;
+    font-size: 11.5pt !important;
+    white-space: nowrap !important;
   }
 
   .spec-item {
-    line-height: 1.6 !important;
+    line-height: 1.45 !important;
   }
 
   .doc-city-date {
-    margin-top: 10mm !important;
-    font-size: 12pt !important;
+    margin-top: 6mm !important;
+    font-size: 11.5pt !important;
   }
 
   .signature-area {
-    margin-top: 15mm !important;
+    margin-top: 8mm !important;
   }
 
   .sig-line {
-    font-size: 12pt !important;
+    font-size: 11.5pt !important;
   }
 
   .sig-sub {
