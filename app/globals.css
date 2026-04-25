@@ -812,9 +812,8 @@ input[readonly] {
     height: 267mm !important;
     max-height: 267mm !important;
     min-height: unset !important;
-    /* Reset all mobile overrides */
-    padding: 0 !important;
-    margin: 0 !important;
+    /* Center horizontally within the @page area */
+    margin: 0 auto !important;
     box-sizing: border-box !important;
     box-shadow: none !important;
     border-radius: 0 !important;
@@ -848,14 +847,7 @@ input[readonly] {
   }
 
   .doc-footer {
-    position: absolute !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    padding: 0 0 4mm !important;
-    border-top: 1px solid #ccc !important;
-    display: flex !important;
-    justify-content: flex-end !important;
+    display: none !important;
   }
 
   .doc-title {
