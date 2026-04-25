@@ -762,7 +762,8 @@ input[readonly] {
 @media print {
   @page {
     size: A4 portrait;
-    margin: 15mm 18mm 15mm 18mm;
+    /* ABNT: sup 30mm, esq 30mm, inf 20mm, dir 20mm */
+    margin: 30mm 20mm 20mm 30mm;
   }
 
   html,
@@ -774,10 +775,9 @@ input[readonly] {
     background: white !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
-    /* Override iOS Safari font scaling */
     -webkit-text-size-adjust: 100% !important;
     text-size-adjust: 100% !important;
-    font-size: 11.5pt !important;
+    font-size: 12pt !important;
   }
 
   .app-header,
@@ -806,26 +806,25 @@ input[readonly] {
   }
 
   .page {
-    /* Force A4 dimensions regardless of screen size */
-    width: 174mm !important;
-    max-width: 174mm !important;
-    height: 267mm !important;
-    max-height: 267mm !important;
+    /* Área útil ABNT: 210 - 30 - 20 = 160mm largura, 297 - 30 - 20 = 247mm altura */
+    width: 160mm !important;
+    max-width: 160mm !important;
+    height: 247mm !important;
+    max-height: 247mm !important;
     min-height: unset !important;
-    /* Center horizontally within the @page area */
     margin: 0 auto !important;
+    padding: 0 !important;
     box-sizing: border-box !important;
     box-shadow: none !important;
     border-radius: 0 !important;
-    /* One page per .page element */
     page-break-after: always !important;
     break-after: page !important;
     overflow: hidden !important;
     position: relative !important;
     display: flex !important;
     flex-direction: column !important;
-    /* Reset mobile font size */
-    font-size: 11pt !important;
+    font-size: 12pt !important;
+    line-height: 1.5 !important;
   }
 
   .page:last-child {
@@ -834,16 +833,21 @@ input[readonly] {
   }
 
   .doc-header {
-    margin: -8mm -18mm 8mm -18mm !important;
-    padding: 6mm 18mm 5mm 18mm !important;
-    /* Undo mobile padding */
+    /* Sangra até as margens do @page: esq 30mm, dir 20mm */
+    margin: 0 -20mm 10mm -30mm !important;
+    padding: 6mm 20mm 6mm 30mm !important;
     left: unset !important;
     right: unset !important;
   }
 
+  .doc-header::after {
+    left: 30mm !important;
+    right: 20mm !important;
+  }
+
   .doc-body {
     flex: 1 !important;
-    padding: 0 0 20mm 0 !important;
+    padding: 0 !important;
   }
 
   .doc-footer {
@@ -851,29 +855,50 @@ input[readonly] {
   }
 
   .doc-title {
-    margin-bottom: 4mm !important;
+    font-size: 13pt !important;
+    margin-bottom: 8mm !important;
     margin-top: 0 !important;
   }
 
   .content-para {
-    margin-bottom: 3mm !important;
-    line-height: 1.4 !important;
+    font-size: 12pt !important;
+    margin-bottom: 5mm !important;
+    line-height: 1.5 !important;
+    text-align: justify !important;
   }
 
   .specs-block {
-    margin: 2mm 0 4mm 4mm !important;
+    margin: 4mm 0 6mm 6mm !important;
+  }
+
+  .spec-label {
+    font-size: 12pt !important;
+    width: 200px !important;
+  }
+
+  .spec-value {
+    font-size: 12pt !important;
   }
 
   .spec-item {
-    line-height: 1.4 !important;
+    line-height: 1.6 !important;
   }
 
   .doc-city-date {
-    margin-top: 4mm !important;
+    margin-top: 10mm !important;
+    font-size: 12pt !important;
   }
 
   .signature-area {
-    margin-top: 6mm !important;
+    margin-top: 15mm !important;
+  }
+
+  .sig-line {
+    font-size: 12pt !important;
+  }
+
+  .sig-sub {
+    font-size: 11pt !important;
   }
 
   /* Undo mobile table layout overrides */
