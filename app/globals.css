@@ -540,30 +540,40 @@ input[readonly] {
 
 /* Doc Layout */
 .doc-header {
-  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin: -18mm -20mm 14mm -20mm;
+  padding: 8mm 20mm 8mm 20mm;
+  background: var(--navy-dark);
+  border-bottom: 4px solid var(--silver);
+  position: relative;
   overflow: hidden;
-  border-radius: 0;
-  line-height: 0;
 }
 
-.doc-header-bg {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: cover;
-}
-
-.doc-header-laudo-num {
+/* Padrão gráfico diagonal APEX */
+.doc-header::before {
+  content: '';
   position: absolute;
-  bottom: 14px;
-  right: 24px;
-  color: #FFFFFF;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 11pt;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  top: 0;
+  right: 160px;
+  width: 10px;
+  height: 100%;
+  background: var(--silver);
+  transform: skewX(-15deg);
+  opacity: 0.25;
+}
+
+.doc-header::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 144px;
+  width: 5px;
+  height: 100%;
+  background: var(--silver);
+  transform: skewX(-15deg);
+  opacity: 0.15;
 }
 
 .doc-logo-area {
@@ -864,25 +874,16 @@ input[readonly] {
   }
 
   .doc-header {
+    /* Sangra até as margens do @page: esq 30mm, dir 20mm */
     margin: 0 -20mm 10mm -30mm !important;
-    padding: 0 !important;
+    padding: 6mm 20mm 6mm 30mm !important;
     left: unset !important;
     right: unset !important;
-    line-height: 0 !important;
   }
 
-  .doc-header-bg {
-    width: 100% !important;
-    height: auto !important;
-    display: block !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-
-  .doc-header-laudo-num {
-    font-size: 9pt !important;
-    bottom: 10px !important;
-    right: 20px !important;
+  .doc-header::after {
+    left: 30mm !important;
+    right: 20mm !important;
   }
 
   .doc-body {
