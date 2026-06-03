@@ -482,13 +482,8 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum, init
         <div className="preview-area">
           <div className="page">
             <div className="doc-header">
-              <div className="doc-logo-area">
-                <img src="/logo_apex.png" alt="APEX Engenharia Mecânica" />
-              </div>
-              <div className="doc-header-info">
-                <div className="company-name">APEX ENGENHARIA MECÂNICA</div>
-                <div className="doc-num-badge">Laudo Nº <span>{num}</span></div>
-              </div>
+              <img src="/header_apex.png" className="doc-header-bg" alt="APEX Engenharia Mecânica" />
+              <div className="doc-header-laudo-num">Laudo Nº {num}</div>
             </div>
 
             <div className="doc-body">
@@ -550,13 +545,8 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum, init
 
           <div className="page">
             <div className="doc-header">
-              <div className="doc-logo-area">
-                <img src="/logo_apex.png" alt="APEX Engenharia Mecânica" />
-              </div>
-              <div className="doc-header-info">
-                <div className="company-name">APEX ENGENHARIA MECÂNICA</div>
-                <div className="doc-num-badge">Laudo Nº <span>{num}</span></div>
-              </div>
+              <img src="/header_apex.png" className="doc-header-bg" alt="APEX Engenharia Mecânica" />
+              <div className="doc-header-laudo-num">Laudo Nº {num}</div>
             </div>
 
             <div className="doc-body">
