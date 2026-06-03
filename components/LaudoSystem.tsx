@@ -73,9 +73,13 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum, init
     SPECS_FIELDS.forEach(f => initialSpecs[f.id] = f.default)
     setSpecs(initialSpecs)
 
-    // Check local logo
+    // Check local logo — usa a logo APEX como padrão
     const savedLogo = localStorage.getItem('sistemmar_logo')
-    if (savedLogo) setLogoBase64(savedLogo)
+    if (savedLogo) {
+      setLogoBase64(savedLogo)
+    } else {
+      setLogoBase64('/logo_apex.png')
+    }
 
     // Check local CREA images
     const savedCreaImageFrente = localStorage.getItem('sistemmar_crea_image_frente')
@@ -303,6 +307,11 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum, init
   return (
     <>
       <header className="app-header">
+        <div className="app-header-left">
+          <div className="app-logo-wrap">
+            <img src="/logo_apex.png" alt="APEX Engenharia Mecânica" />
+          </div>
+        </div>
         <div className="app-header-right">
           <button className="btn btn-ghost btn-sm" onClick={() => setShowBoatsReport(true)}>📋 Relatório de Fabricantes</button>
           <label className="btn btn-ghost btn-sm" style={{ cursor: 'pointer' }} title="Importar backup (.json)">
@@ -473,7 +482,11 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum, init
         <div className="preview-area">
           <div className="page">
             <div className="doc-header">
+              <div className="doc-logo-area">
+                <img src="/logo_apex.png" alt="APEX Engenharia Mecânica" />
+              </div>
               <div className="doc-header-info">
+                <div className="company-name">APEX ENGENHARIA MECÂNICA</div>
                 <div className="doc-num-badge">Laudo Nº <span>{num}</span></div>
               </div>
             </div>
@@ -537,7 +550,11 @@ export default function LaudoSystem({ initialLaudos, initialBoats, nextNum, init
 
           <div className="page">
             <div className="doc-header">
+              <div className="doc-logo-area">
+                <img src="/logo_apex.png" alt="APEX Engenharia Mecânica" />
+              </div>
               <div className="doc-header-info">
+                <div className="company-name">APEX ENGENHARIA MECÂNICA</div>
                 <div className="doc-num-badge">Laudo Nº <span>{num}</span></div>
               </div>
             </div>
