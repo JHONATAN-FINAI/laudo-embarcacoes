@@ -1,33 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
 
 :root {
-  /* Premium Palette */
-  --navy: #0F172A;
-  --navy-dark: #020617;
-  --navy-light: #1E293B;
-  --gold: #D4AF37;
-  --gold-light: #FDE047;
-  --gold-dark: #A1801C;
-  --bg-gradient: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+  /* APEX Brand Colors */
+  --navy: #0D3B66;
+  --navy-dark: #0A1A2B;
+  --navy-light: #0D3B66;
+  --silver: #A7A9AC;
+  --silver-light: #E6E8EB;
+  --bg-gradient: linear-gradient(135deg, #F4F6F9 0%, #E6E8EB 100%);
   --white: #FFFFFF;
 
-  --text-main: #334155;
-  --text-muted: #64748B;
-  --border: #E2E8F0;
+  --text-main: #0A1A2B;
+  --text-muted: #5A6A7A;
+  --border: #D8DCE1;
 
-  --danger: #EF4444;
-  --danger-light: #FEE2E2;
-  --success: #10B981;
-  --success-light: #D1FAE5;
+  --danger: #C0392B;
+  --danger-light: #FADBD8;
+  --success: #1A7A4A;
+  --success-light: #D5F0E1;
 
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --radius-sm: 0.375rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
+  --shadow-sm: 0 1px 2px 0 rgb(10 26 43 / 0.06);
+  --shadow-md: 0 4px 6px -1px rgb(10 26 43 / 0.12), 0 2px 4px -2px rgb(10 26 43 / 0.08);
+  --shadow-lg: 0 10px 20px -3px rgb(10 26 43 / 0.15), 0 4px 8px -4px rgb(10 26 43 / 0.1);
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.625rem;
 
-  /* Transition */
   --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -38,7 +36,7 @@
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   background: var(--bg-gradient);
   color: var(--text-main);
   min-height: 100vh;
@@ -52,7 +50,8 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
 }
 
 /* App Header */
@@ -68,7 +67,32 @@ h6 {
   top: 0;
   z-index: 900;
   box-shadow: var(--shadow-lg);
-  border-bottom: 2px solid var(--gold);
+  border-bottom: 3px solid var(--navy);
+  overflow: hidden;
+}
+
+.app-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 120px;
+  width: 6px;
+  height: 100%;
+  background: var(--silver);
+  transform: skewX(-15deg);
+  opacity: 0.6;
+}
+
+.app-header::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 108px;
+  width: 3px;
+  height: 100%;
+  background: var(--silver);
+  transform: skewX(-15deg);
+  opacity: 0.35;
 }
 
 .app-header-left {
@@ -102,10 +126,10 @@ h6 {
 
 .app-sub {
   font-size: 0.75rem;
-  color: var(--gold);
+  color: var(--silver-light);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   white-space: nowrap;
 }
 
@@ -132,7 +156,7 @@ h6 {
 }
 
 .app-logo-wrap:hover {
-  border-color: var(--gold);
+  border-color: var(--silver-light);
   background: rgba(255, 255, 255, 0.1);
 }
 
@@ -144,7 +168,7 @@ h6 {
 
 .app-logo-placeholder {
   font-size: 1.5rem;
-  color: var(--gold);
+  color: var(--silver-light);
 }
 
 .logo-upload-hint {
@@ -159,7 +183,7 @@ h6 {
   justify-content: center;
   opacity: 0;
   transition: var(--transition);
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   letter-spacing: 1px;
 }
 
@@ -181,10 +205,10 @@ h6 {
 
 .app-sub {
   font-size: 0.75rem;
-  color: var(--gold);
+  color: var(--silver-light);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 /* Buttons */
@@ -196,7 +220,7 @@ h6 {
   border-radius: var(--radius-md);
   border: none;
   cursor: pointer;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 0.875rem;
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -209,12 +233,12 @@ h6 {
 }
 
 .btn-primary {
-  background: var(--gold);
-  color: var(--navy-dark);
+  background: var(--navy);
+  color: var(--white);
 }
 
 .btn-primary:hover {
-  background: var(--gold-light);
+  background: var(--navy-light);
   box-shadow: var(--shadow-md);
 }
 
@@ -288,12 +312,12 @@ h6 {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 0.9rem;
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  border-bottom: 3px solid var(--gold);
+  border-bottom: 3px solid var(--silver);
 }
 
 .sidebar-body {
@@ -321,12 +345,12 @@ h6 {
 }
 
 .form-section-title {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--gold-dark);
+  color: var(--navy);
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--border);
@@ -350,7 +374,7 @@ select {
   padding: 0.6rem 0.8rem;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  font-family: 'Inter', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 0.875rem;
   color: var(--text-main);
   background: #F8FAFC;
@@ -360,9 +384,9 @@ select {
 
 input[type=text]:focus,
 select:focus {
-  border-color: var(--gold);
+  border-color: var(--silver-light);
   background: var(--white);
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+  box-shadow: 0 0 0 3px rgba(13, 59, 102, 0.15);
 }
 
 input[readonly] {
@@ -396,7 +420,7 @@ input[readonly] {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 3px solid var(--gold);
+  border-bottom: 3px solid var(--silver);
 }
 
 .history-header h3 {
@@ -408,8 +432,8 @@ input[readonly] {
 
 .history-count {
   background: rgba(255, 255, 255, 0.1);
-  color: var(--gold-light);
-  font-family: 'Inter', sans-serif;
+  color: var(--silver-light);
+  font-family: 'Montserrat', sans-serif;
   font-size: 0.75rem;
   font-weight: 600;
   padding: 0.25rem 0.75rem;
@@ -424,7 +448,7 @@ input[readonly] {
 
 .history-table thead th {
   background: #F8FAFC;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.05em;
@@ -453,7 +477,7 @@ input[readonly] {
 
 .laudo-num {
   font-weight: 600;
-  color: var(--navy-light);
+  color: var(--navy);
   background: #F1F5F9;
   padding: 0.2rem 0.5rem;
   border-radius: var(--radius-sm);
@@ -469,12 +493,12 @@ input[readonly] {
   color: var(--white);
   padding: 1rem 1.5rem;
   border-radius: var(--radius-md);
-  font-family: 'Inter', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 0.875rem;
   font-weight: 500;
   z-index: 9999;
   box-shadow: var(--shadow-lg);
-  border-left: 4px solid var(--gold);
+  border-left: 4px solid var(--silver);
   animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
@@ -509,7 +533,7 @@ input[readonly] {
   padding: 22mm 20mm 22mm;
   position: relative;
   color: #0F172A;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 11.5pt;
   display: flex;
   flex-direction: column;
@@ -523,18 +547,35 @@ input[readonly] {
   align-items: center;
   margin: -18mm -20mm 14mm -20mm;
   padding: 8mm 20mm 8mm 20mm;
-  border-bottom: 3px solid var(--navy-dark);
+  background: var(--navy-dark);
+  border-bottom: 4px solid var(--silver);
   position: relative;
+  overflow: hidden;
+}
+
+/* Padrão gráfico diagonal APEX */
+.doc-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 160px;
+  width: 10px;
+  height: 100%;
+  background: var(--silver);
+  transform: skewX(-15deg);
+  opacity: 0.25;
 }
 
 .doc-header::after {
   content: '';
   position: absolute;
-  bottom: -5px;
-  left: 20mm;
-  right: 20mm;
-  height: 1px;
-  background: var(--gold);
+  top: 0;
+  right: 144px;
+  width: 5px;
+  height: 100%;
+  background: var(--silver);
+  transform: skewX(-15deg);
+  opacity: 0.15;
 }
 
 .doc-logo-area {
@@ -554,7 +595,7 @@ input[readonly] {
 }
 
 .doc-logo-placeholder {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   font-size: 13pt;
   color: var(--white);
@@ -564,26 +605,27 @@ input[readonly] {
 
 .doc-header-info {
   text-align: right;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .doc-header-info .company-name {
   font-size: 10pt;
   font-weight: 700;
-  color: var(--navy-dark);
+  color: var(--white);
   letter-spacing: 0.04em;
 }
 
 .doc-num-badge {
   margin-top: 5px;
   display: inline-block;
-  background: var(--navy-dark);
-  color: var(--gold-light);
+  background: rgba(255,255,255,0.12);
+  color: var(--silver-light);
   font-size: 8pt;
   font-weight: 700;
   padding: 3px 10px;
   border-radius: 4px;
   letter-spacing: 0.05em;
+  border: 1px solid rgba(167,169,172,0.3);
 }
 
 /* Doc Body */
@@ -601,7 +643,7 @@ input[readonly] {
   color: var(--navy-dark);
   position: relative;
   padding-bottom: 0.6rem;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .doc-title::after {
@@ -611,8 +653,8 @@ input[readonly] {
   left: 50%;
   transform: translateX(-50%);
   width: 60px;
-  height: 2px;
-  background: var(--gold);
+  height: 3px;
+  background: var(--silver);
 }
 
 .content-para {
@@ -684,7 +726,7 @@ input[readonly] {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 8pt;
   color: var(--text-muted);
   border-top: 1px solid var(--border);
@@ -698,7 +740,7 @@ input[readonly] {
 .footer-page {
   font-weight: 600;
   font-size: 8.5pt;
-  color: var(--navy-dark);
+  color: var(--white);
   width: 22px;
   height: 22px;
   border: 1px solid var(--navy-dark);
@@ -721,7 +763,7 @@ input[readonly] {
 }
 
 .crea-title {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 10pt;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -753,9 +795,9 @@ input[readonly] {
 }
 
 .crea-upload-zone:hover {
-  border-color: var(--gold);
+  border-color: var(--silver-light);
   background: rgba(212, 175, 55, 0.05);
-  color: var(--gold-dark);
+  color: var(--navy);
 }
 
 /* Print Rules */
