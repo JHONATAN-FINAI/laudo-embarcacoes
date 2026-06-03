@@ -141,8 +141,8 @@ h6 {
 }
 
 .app-logo-wrap {
-  width: 140px;
-  height: 48px;
+  width: 200px;
+  height: 62px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -577,8 +577,8 @@ input[readonly] {
 }
 
 .doc-logo-area {
-  width: 160px;
-  height: 64px;
+  width: 220px;
+  height: 84px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
